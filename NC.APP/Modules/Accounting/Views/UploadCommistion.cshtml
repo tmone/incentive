@@ -1,0 +1,62 @@
+﻿@inherits System.Web.Mvc.WebViewPage
+    
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title></title>
+    <script src="@Url.Content("~/Resource/scripts/app/Accounting/UploadCommistion.js")"></script>
+    <style>
+        .form-fix {
+            padding-bottom: 10px;
+        }
+        .height100{
+            height:100%;
+        }
+    </style>
+</head>
+<body>
+    <div class="row">
+        <div class="col-md-12  column">
+            <div class="box box-warning">
+                <div class="box-body">
+                    <div class="nav-tabs-custom">
+                        <ul class="nav nav-tabs pull-right">
+                            <li class=""><a href="#change-history" data-toggle="tab" aria-expanded="false" style="display:none">History</a></li>
+                            <li class=""><a href="#change-state" data-toggle="tab" aria-expanded="false">Upload</a></li>
+
+                            <li class="pull-left header"><i class="fa fa-inbox"></i> Upload Commistion from Accounting</li>
+                        </ul>
+                        <div class="tab-content">
+                            <div class='tab-pane' id='change-history'>
+                                <div id="history">
+                                </div>
+                            </div>
+                            <div class='tab-pane' id='change-state'>
+                                <div id="state">
+                                </div>
+                                <div class='popup'></div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <script>
+    //var his = new SetHistory({id:'#history'});
+    var set = new UploadCommistion({ id: '#state'});
+
+
+    </script>
+    <script>
+
+    $("[href='#change-history']").click();
+    $("[href='#change-state']").click();
+    </script>
+
+</body>
+</html>

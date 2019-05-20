@@ -1,0 +1,11 @@
+1.1.2
+  Fix issue with tab key
+
+1.1.1
+  Fix issue with $(selector).scannerDetection('scanned string')
+
+1.1.0
+ Add events scannerDetectionComplete, scannerDetectionError, scannerDetectionReceive
+
+1.0.0
+ Initial version

@@ -1,0 +1,125 @@
+﻿@inherits System.Web.Mvc.WebViewPage
+<div id="mainID">
+    <div class="row">
+        <div class="col-md-12  column">
+            <div class="box box-warning">
+                <div class="box-body">
+                    <div id='form'></div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="row">
+        <div class="col-md-12  column">
+            <div class="box">
+                <div class="box-body">
+                    <div id='preview'>
+                        Please choice a Sale and key
+                    </div>
+                    <div class="loadpanel"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+$(function(){
+
+    var loadPanel = $(".loadpanel").dxLoadPanel({
+        shadingColor: "rgba(0,0,0,0.4)",
+        position: { of: "#mainID" },
+        visible: false,
+        showIndicator: true,
+        showPane: true,
+        shading: true,
+        closeOnOutsideClick: false,           
+    }).dxLoadPanel("instance");
+
+    var userStore = new NCData({
+        url: 'api/Accounting/KPISaler/Saler',
+        wait:true,
+        callback: function (a) {            
+            // //that.Component.columnOption('user', 'lookup.dataSource', a);
+            // $form.itemOption("saler", "editorOptions.dataSource", {
+            //         dataSource:a,
+            //         valueExpr:"id",
+            //         displayExpr:"CodeName"
+            //     });
+        }
+    });
+    var newDate = new Date();
+    newDate.setDate(1);
+    newDate.setHours(0,0,1);
+    var $form = $("#form").dxForm({
+        colCount:4,
+        formData:{
+            key:newDate,
+            TypeReport:"pdf"
+        },
+        items:[
+            {
+                colSpan:1,
+                dataField:"saler",
+                editorType:"dxSelectBox",
+                editorOptions:{
+                    dataSource:userStore.data,
+                    valueExpr:"id",
+                    displayExpr:"CodeName",
+                    searchEnabled:true
+                }
+            },
+            {
+                dataField:"key",
+                editorType:"dxDateBox",
+                editorOptions:{
+                    width:"100%",
+                    displayFormat:"yyyy-MM",                    
+                    maxZoomLevel: 'year', 
+                    minZoomLevel: 'century', 
+                    min: new Date('2018-01-01'),
+                    max: new Date()
+                }
+            },
+            {
+                editorType: "dxRadioGroup",
+                dataField:"TypeReport",
+                editorOptions:{
+                    items:["pdf","xlsx","htm","xml"],
+                    layout: "horizontal" 
+                }
+            },
+            {
+                itemType: "button",
+                buttonOptions: {
+                    text: "View",
+                    type: "success",
+                    useSubmitBehavior: true,
+                    onClick:function(e){
+                                            
+                        var dat = $form.option("formData");
+                        var v = dat.key;
+                        v.setHours(v.getHours() - v.getTimezoneOffset() / 60);
+                        v= v.toJSON().substr(0,7);
+                        if(dat.TypeReport=="htm"){
+                            loadPanel.show();    
+                            $.get(getURL('api/Accounting/Report/getKPISaler?s='+dat.saler+'&t='+dat.TypeReport+'&v='+v), function( data ) {
+                                $("#preview" ).html( data );
+                                loadPanel.hide();
+                            }); 
+                        }else{
+                            window.open(getURL('api/Accounting/Report/getKPISaler?s='+dat.saler+'&t='+dat.TypeReport+'&v='+v));
+
+                        }
+                        
+
+                    }
+                }                    
+            }
+        ],
+    }).dxForm("instance");
+
+
+
+});
+</script>

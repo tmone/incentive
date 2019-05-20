@@ -1,0 +1,73 @@
+﻿@inherits System.Web.Mvc.WebViewPage
+
+<div class="row">
+    <div class="col-md-6">
+        <!-- OrgChart -->
+        <!-- general form elements disabled -->
+        <div class="box box-warning">
+            <div class="box-header with-border">
+                <h3 class="box-title">Roles</h3>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+                <div id="role">
+
+                </div>
+            </div>
+            <!-- /.box-body -->
+        </div>
+        <!-- /.box -->
+    </div>
+    <div class="col-md-6">
+        <!-- OrgChart -->
+        <!-- general form elements disabled -->
+        <div class="nav-tabs-custom">
+            <ul class="nav nav-tabs pull-right">
+                <li class="active"><a href="#role-user" data-toggle="tab" aria-expanded="true">User</a></li>
+                <li class=""><a href="#role-menu" data-toggle="tab" aria-expanded="false">Menu</a></li>
+                <li class=""><a href="#role-action" data-toggle="tab" aria-expanded="false">Action</a></li>
+                <li class="pull-left header"><i class="fa fa-inbox"></i> Permission</li>
+            </ul>
+            <div class="tab-content">
+                <div class='tab-pane' id='role-user'>
+                    <div id="user">
+                    </div>
+                </div>
+                <div class='tab-pane' id='role-menu'>
+                    <div id="menu"></div>
+                </div>
+                <div class='tab-pane' id='role-action'>
+                    <div id="action"></div>
+                </div>
+
+            </div>
+        </div>
+        <!-- /.box-body -->
+    </div>
+    <!-- /.box -->
+</div>
+
+<script src="@Url.Content("~/Resource/scripts/app/account/Role.js")"></script>
+<script src="@Url.Content("~/Resource/scripts/app/account/RoleUser.js")"></script>
+<script src="@Url.Content("~/Resource/scripts/app/account/RoleMenu.js")"></script>
+<script src="@Url.Content("~/Resource/scripts/app/account/RoleAction.js")"></script>
+<script>
+    var role = new Role({ id: "#role" });
+    var user = new RoleUser({ id: "#user" });
+    var menu = new RoleMenu({ id: "#menu" });
+    var action = new RoleAction({ id: "#action" });
+</script>
+<script>
+    role.Component.on("selectionChanged", function (e) {
+        user.UpdateRole(e.currentSelectedRowKeys[0]);
+        menu.UpdateRole(e.currentSelectedRowKeys[0]);
+        action.UpdateRole(e.currentSelectedRowKeys[0]);
+    });
+    function RefreshRole() {
+        role.Component.refresh();
+    }
+    user.Component.on({ "rowInserted": RefreshRole, "rowRemoved": RefreshRole })
+    $("a[href='#role-action']").click();
+    $("a[href='#role-menu']").click();
+    $("a[href='#role-user']").click();
+</script>

@@ -1,0 +1,61 @@
+﻿@inherits System.Web.Mvc.WebViewPage
+<link rel="stylesheet" href="@Url.Content("~/Resource/lib/grapes.js/css/grapes.min.css")">
+<link rel="stylesheet" href="@Url.Content("~/Resource/lib/grapes.js/grapesjs-preset-webpage.min.css")">
+<script src="@Url.Content("~/Resource/lib/grapes.js/grapes.min.js")"></script>
+<script src="@Url.Content("~/Resource/lib/grapes.js/grapesjs-preset-webpage.min.js")"></script>
+
+<script src="@Url.Content("~/Resource/lib/ace/ace.js")"></script>
+<script src="@Url.Content("~/Resource/lib/ace/ext-language_tools.js")"></script>
+<script src="@Url.Content("~/Resource/lib/ace/theme-monokai.js")"></script>
+<script src="@Url.Content("~/Resource/lib/ace/mode-html.js")"></script>
+
+<script src="@Url.Content("~/Resource/scripts/app/Master/Customer.js")"></script>
+<script src="@Url.Content("~/Resource/scripts/app/Master/CustomerGroup.js")"></script>
+<script src="@Url.Content("~/Resource/scripts/app/Master/CustomerType.js")"></script>
+<script src="@Url.Content("~/Resource/scripts/app/Navigation/print.js")"></script>
+
+<style>
+    .active {
+        border-top-color: #f39c12 !important;
+    }
+    
+</style>
+<div class="row">
+    <div class="col-md-3  column">
+        <div class="nav-tabs-custom">
+            <ul class="nav nav-tabs">
+                <li class=""><a href="#customer-group" data-toggle="tab" aria-expanded="false">Group</a></li>
+                <li class="active"><a href="#customer-type" data-toggle="tab" aria-expanded="true">Type</a></li>
+
+            </ul>
+            <div class="tab-content">
+                <div class='tab-pane' id='customer-group'>
+                    <script>
+                        var gro = new CustomerGroup();
+
+                    </script>
+                </div>
+                <div class='tab-pane' id='customer-type'>
+                    <script>
+                        var typ = new CustomerType();
+
+                    </script>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-9 column">
+        <div class="box box-warning">
+            <div class="box-body">
+                <script>
+                    var cus = new Customer();
+
+                </script>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script>
+                    $("a[href='#customer-group']").click();
+</script>

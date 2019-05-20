@@ -1,0 +1,19 @@
+﻿@inherits System.Web.Mvc.WebViewPage
+<script src="@Url.Content("~/Resource/lib/ace/ace.js")"></script>
+<script src="@Url.Content("~/Resource/lib/ace/ext-language_tools.js")"></script>
+<script src="@Url.Content("~/Resource/lib/ace/theme-monokai.js")"></script>
+<script src="@Url.Content("~/Resource/lib/ace/mode-javascript.js")"></script>
+<script src="@Url.Content("~/Resource/lib/math/math.js")"></script>
+<script src="@Url.Content("~/Resource/scripts/app/Accounting/KPISetting.js")"></script>
+<style>
+    .ace_constant.ace_language {
+        color: darkorange !important;                  
+        font-weight:bold;
+    }        
+</style>
+<script>
+    var module = new KPISetting();
+</script>
+<div style="display:none;">
+    <input id="exp" type="text"/>
+</div>

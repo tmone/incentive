@@ -1,0 +1,16 @@
+﻿@inherits System.Web.Mvc.WebViewPage
+<script src="@Url.Content("~/Resource/lib/ace/ace.js")"></script>
+<script src="@Url.Content("~/Resource/lib/ace/ext-language_tools.js")"></script>
+<script src="@Url.Content("~/Resource/lib/ace/theme-monokai.js")"></script>
+<script src="@Url.Content("~/Resource/lib/ace/mode-csharp.js")"></script>
+<script src="@Url.Content("~/Resource/scripts/app/Accounting/DiscountConfig.js")"></script>
+<style>
+    .ace_constant.ace_language {
+        color: darkorange !important;                  
+        font-weight:bold;
+    }        
+</style>
+<script>
+    var conf = new DiscountConfig();
+</script>
+

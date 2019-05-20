@@ -1,0 +1,58 @@
+﻿@inherits System.Web.Mvc.WebViewPage
+<div class="row">
+    <div class="col-md-6">
+        <!-- OrgChart -->
+        <!-- general form elements disabled -->
+        <div class="box box-warning">
+            <div class="box-header with-border">
+                <h3 class="box-title">Organization tree</h3>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+                <div id="orgchart">
+
+                </div>
+            </div>
+            <!-- /.box-body -->
+        </div>
+        <!-- /.box -->
+    </div>
+    <div class="col-md-6">
+        <!-- OrgChart -->
+        <!-- general form elements disabled -->
+        <div class="box box-warning">
+            <div class="box-header with-border">
+                <h3 class="box-title">User</h3>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+                <div id="user">
+
+                </div>
+            </div>
+            <!-- /.box-body -->
+        </div>
+        <!-- /.box -->
+    </div>
+</div>
+<div class="row">
+    <div id="ctOrgchart"></div>
+</div>
+<script src="@Url.Content("~/Resource/scripts/app/account/Orgchart.js")"></script>
+<script src="@Url.Content("~/Resource/scripts/app/account/OrgchartUser.js")"></script>
+<script>
+    //create widget
+    var org = new Orgchart({ id: "#orgchart" });
+    var usr = new OrgchartUser({ id: "#user" });
+
+    //expand function
+    function updateOrgchart(e) {
+        org.Component.refresh();
+    }
+    usr.Component.on({ "rowInserted": updateOrgchart, "rowRemoved": updateOrgchart });
+    function updateUser(e) {
+        usr.UpdateOrgchart(e.currentSelectedRowKeys[0]);
+    }
+    org.Component.on("selectionChanged", updateUser);
+</script>
+

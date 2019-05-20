@@ -1,0 +1,38 @@
+.animateNew{
+    -webkit-animation-name: aninew; /* Safari 4.0 - 8.0 */
+    -webkit-animation-duration: 1s; /* Safari 4.0 - 8.0 */
+    animation-name: aninew;
+    animation-duration: 1s;
+    position:relative;
+}
+.animateUpdate{
+    -webkit-animation-name: aniupdate; /* Safari 4.0 - 8.0 */
+    -webkit-animation-duration: 1s; /* Safari 4.0 - 8.0 */
+    animation-name: aniupdate;
+    animation-duration: 1s;
+}
+@-webkit-keyframes aniupdate {
+    0%   {}
+    50%  {background-color: #f39c12;}    
+    100% {}
+}
+
+/* Standard syntax */
+@keyframes aniupdate {
+    0%   {}
+    50%  {background-color: #f39c12;}    
+    100% {}
+}
+
+@-webkit-keyframes aninew {
+    0% {top:-50px;opacity:0} 
+    50%  {top:-25px;background-color: #00a65a;opacity:0.75;}  
+    100%   {top:0;opacity:1}
+}
+
+/* Standard syntax */
+@keyframes aninew {
+    0% {top:-50px;opacity:0} 
+    50%  {top:-25px;background-color: #00a65a;opacity:0.75;}  
+    100%   {top:0;opacity:1}
+}

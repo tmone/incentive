@@ -1,0 +1,19 @@
+﻿@inherits System.Web.Mvc.WebViewPage
+
+<div class="row">
+    <dir class="col-md-12">
+        <div class="box box-warning">
+            <div class="box-body">
+                <div id="gridContainer"></div>
+            </div>
+        </div>
+    </dir>
+</div>
+<script src="@Url.Content("~/Resource/scripts/app/account/User.js")"></script>
+<script>
+    var usr = new User({
+        id: "#gridContainer",
+        permit: { add: true, edit: true, delete: true, addorgchart: true, addrole: true, deleteorgchart: true, deleterole: true}
+    });
+    usr.Init();
+</script>

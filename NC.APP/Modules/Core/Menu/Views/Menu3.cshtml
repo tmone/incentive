@@ -1,0 +1,61 @@
+﻿<ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+    @for (int i = 0; i < Model.data.Count; i++)
+    {
+        var m = Model.data[i];
+        if(!m.icon.Contains(" ") && m.icon.Contains("fa-"))
+        {
+            m.icon = "fa " + m.icon;
+        }
+        int current_level = (int)m.mlevel;
+        int next_level = current_level;
+        if (i < Model.data.Count - 1)
+        {
+            var n = Model.data[i + 1];
+            next_level = (int)n.mlevel;
+        }
+
+        if (current_level == next_level)//print same level
+        {
+            @:<li><a href="/bootstrap/bootstrap/load/@m.pageid"><i class="@m.icon"></i> <span>@m.title</span></a></li>
+        }
+        else if (current_level < next_level)//print child level
+        {
+            @:<li class="nav-item has-treeview">
+                <a href="#" class="nav-link">
+                    <i class="nav-icon @m.icon"></i> <p>@m.title<i class="right fa fa-angle-left"></i></p>                    
+                </a>
+                @:<ul class="nav nav-treeview">
+
+
+
+
+                }
+                else //back to parent level
+                {
+                    <li class="nav-item"><a href="/bootstrap/bootstrap/load/@m.pageid" class="nav-link"><i class="@m.icon"></i> <p>@m.title</p></a></li>
+                    for (int k = 1; k <= (current_level - next_level); k++)
+                    {
+                        @:</ul>
+                    @:</li>
+            }
+
+        }
+
+
+    }
+
+</ul>
+<script>
+    /* add active class and stay opened when selected */
+    var url = window.location;
+
+    // for sidebar menu entirely but not cover treeview
+    $('ul.nav-sidebar a').filter(function () {
+        return this.href == url;
+    }).addClass("active").parent().addClass('menu-open');
+
+    // for treeview
+    $('ul.nav-treeview a').filter(function () {
+        return this.href == url;
+    }).parentsUntil(".nav-sidebar > .nav-treeview").addClass('active');
+</script>

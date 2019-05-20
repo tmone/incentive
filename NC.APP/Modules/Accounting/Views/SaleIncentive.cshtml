@@ -1,0 +1,117 @@
+﻿@inherits System.Web.Mvc.WebViewPage
+    
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Sale Incentive</title>
+    @*
+    <script src="@Url.Content("~/Resource/scripts/app/Accounting/SaleIncentive.js")"></script>
+    <script src="@Url.Content("~/Resource/scripts/app/Accounting/SaleIncentiveData.js")"></script>
+    *@
+    <style>
+        .form-fix {
+            padding-bottom: 10px;
+        }
+        .height100{
+            height:100%;
+        }
+        .text-perfect{
+            font-weight:bold;
+            color: green;
+        }
+        .text-super{
+            font-weight:bold;
+            color: orange;
+        }
+    </style>
+</head>
+<body>    
+    @*<div class="nav-tabs-custom">
+        <ul class="nav nav-tabs pull-right">
+            <li class="active"><a href="#change-state" data-toggle="tab" aria-expanded="false">Data</a></li>
+            <li class=""><a href="#change-history" data-toggle="tab" aria-expanded="false" >Chart</a></li>
+            
+            <li class="pull-left header"><i class="fas fa-chart-pie"></i>  Incentive</li>
+        </ul>
+        <div class="tab-content">
+            <div class='tab-pane' id='change-history'>
+                <script>
+                    var incent = new SaleIncentive();
+                </script>
+            </div>
+            <div class='tab-pane' id='change-state'>
+                <div id='data'></div>
+            </div>
+
+        </div>
+    </div>
+    <script>
+       
+        var incentData = new SaleIncentiveData({id:"#data"});
+             
+        $("[href='#change-state']").click();
+        $("[href='#change-history']").click();       
+    </script>*@
+    <div id="form"></div>
+    <script>
+        $(function () {
+            var formID = $("#form").dxForm({
+                formData: {
+                    fromMonth: new Date(),
+                    toMonth: new Date(),
+                },
+                colCount: 4,
+                items: [
+                    {
+                        dataField: "fromMonth",
+                        editorType: "dxDateBox",                        
+                        editorOptions: {
+                            maxZoomLevel: 'year',
+                            minZoomLevel: 'century', 
+                            displayFormat: "yyyy-MM",
+                            calendarOptions: {
+                                zoomLevel: "year"
+                            }
+                        },
+                    },
+                    {
+                        dataField: "toMonth",
+                        editorType: "dxDateBox",                        
+                        editorOptions: {
+                            maxZoomLevel: 'year',
+                            minZoomLevel: 'century', 
+                            displayFormat: "yyyy-MM",
+                            calendarOptions: {
+                                zoomLevel: "year"
+                            }
+                        },
+                    },                    
+                    {
+                        itemType: "empty",
+                    },
+                    {
+                        itemType: "button",
+                        buttonOptions: {
+                            icon: "exportxlsx",
+                            text: "Export Excel",
+                            onClick: function () {
+                                var formData = formID.option("formData");
+                                var k = [];
+                                var from = new Date(formData.fromMonth.getTime());
+                               
+                                while (from <= formData.toMonth) {
+                                    k.push(from.toJSON().substr(0, 7));
+                                    from.setMonth(from.getMonth() + 1);
+                                }
+                                window.open(getURL('api/accounting/report/getIncentiveMonth?s=52501&t=xlsx&v='+k.join(',')));
+                            }
+                        }
+                    }
+                ]
+            }).dxForm("instance");
+        });
+    </script>
+</body>
+</html>

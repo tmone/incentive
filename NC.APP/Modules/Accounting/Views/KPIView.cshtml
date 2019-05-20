@@ -1,0 +1,151 @@
+﻿@inherits System.Web.Mvc.WebViewPage
+<style>
+    .scrollbar
+    {        
+        overflow-x: scroll;        
+    }
+</style>
+<div id="mainID">
+    <div class="row">
+        <div class="col-md-12  column">
+            <div class="box box-warning">
+                <div class="box-body">
+                    <div id='form'></div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="row">
+        <div class="col-md-12  column">
+            <div class="box">
+                <div class="box-body">
+                    <div class="scrollbar">
+                        <div id='preview' >
+                            Please choice a Sale and key
+                        </div>                        
+                    </div>
+                    <div class="loadpanel"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+$(function(){
+
+    var loadPanel = $(".loadpanel").dxLoadPanel({
+        shadingColor: "rgba(0,0,0,0.4)",
+        position: { of: "#mainID" },
+        visible: false,
+        showIndicator: true,
+        showPane: true,
+        shading: true,
+        closeOnOutsideClick: false,           
+    }).dxLoadPanel("instance");
+
+    var userStore = new NCData({
+        url: 'api/Accounting/KPISaler/Saler',
+        wait:true,
+        callback: function (a) {            
+            // //that.Component.columnOption('user', 'lookup.dataSource', a);
+            // $form.itemOption("saler", "editorOptions.dataSource", {
+            //         dataSource:a,
+            //         valueExpr:"id",
+            //         displayExpr:"CodeName"
+            //     });
+        }
+    });
+    var newDate = new Date();
+    newDate.setDate(1);
+    newDate.setHours(0,0,1);
+    var $form = $("#form").dxForm({
+        colCount:2,
+        formData:{            
+            TypeReport:"pdf"
+        },
+        items:[
+            {
+                colSpan:2,
+                dataField:"saler",
+                editorType:"dxTagBox",
+                editorOptions:{
+                    dataSource:userStore.data,
+                    valueExpr:"id",
+                    displayExpr:"CodeName",                    
+                    //searchMode: "startswith",                    
+                    selectAllMode: "allPages",
+                    showClearButton: true, 
+                    showSelectionControls: true,
+                    multiline: false,
+                    placeholder: "Choose Saler...",
+                    searchEnabled: true
+                }
+            },
+            {
+                colSpan:2,
+                dataField:"key",
+                editorType:"dxTagBox",
+                editorOptions:{
+                    items:[
+                        "2018-01",
+                        "2018-02",
+                        "2018-03",
+                        "2018-04",
+                        "2018-05",
+                        "2018-06",
+                        "2018-07",
+                        "2018-08",
+                        "2018-09",
+                        "2018-10",
+                        "2018-11"
+                    ],
+                    //searchMode: "startswith",                    
+                    selectAllMode: "allPages",
+                    showClearButton: true, 
+                    showSelectionControls: true,
+                    multiline: false,
+                    placeholder: "Choose key...",
+                    searchEnabled: true
+                }
+            },
+            {
+                editorType: "dxRadioGroup",
+                dataField:"TypeReport",
+                editorOptions:{
+                    items:["pdf","xlsx","htm","xml"],
+                    layout: "horizontal",
+                }
+            },
+            {
+                itemType: "button",
+                buttonOptions: {
+                    text: "View",
+                    type: "success",
+                    useSubmitBehavior: true,
+                    onClick:function(e){
+                                            
+                        var dat = $form.option("formData");
+                        var v = dat.key;                        
+                        if(dat.TypeReport=="htm"){
+                            loadPanel.show();    
+                            $.get(getURL('api/Accounting/Report/getKPIMonth?s='+dat.saler+'&t='+dat.TypeReport+'&v='+v), function( data ) {
+                                $("#preview" ).html( data );
+                                loadPanel.hide();
+                            }); 
+                        }else{
+                            window.open(getURL('api/Accounting/Report/getKPIMonth?s='+dat.saler+'&t='+dat.TypeReport+'&v='+v));
+
+                        }
+                        
+
+                    }
+                }                    
+            }
+        ],
+    }).dxForm("instance");
+
+
+
+});
+</script>

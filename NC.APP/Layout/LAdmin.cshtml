@@ -1,0 +1,396 @@
+﻿@{ Layout = null; }
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- ADMIN LTE Include-->
+    <title>Kerry Express (VN) Portal</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <link rel="stylesheet" href="@Url.Content("~/Resource/lib/AdminLTE-2.4.2/bower_components/bootstrap/dist/css/bootstrap.min.css")">
+    <!-- Font Awesome 5.0-->
+    <link rel="stylesheet" href="@Url.Content("~/Resource/lib/fontawesome-free-5.1.0-web/css/all.css ")">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="@Url.Content("~/Resource/lib/AdminLTE-2.4.2/bower_components/font-awesome/css/font-awesome.min.css")">
+
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="@Url.Content("~/Resource/lib/AdminLTE-2.4.2/bower_components/Ionicons/css/ionicons.min.css")">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="@Url.Content("~/Resource/lib/AdminLTE-2.4.2/dist/css/AdminLTE.min.css ")">
+    <!-- AdminLTE Skins. We have chosen the skin-blue for this starter
+          page. However, you can choose any other skin. Make sure you
+          apply the skin class to the body tag so the changes take effect. -->
+    <link rel="stylesheet" href="@Url.Content("~/Resource/lib/AdminLTE-2.4.2/dist/css/skins/skin-organe.min.css ")">
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <!-- Google Font -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+    <!-- DEVEXTREME Include-->
+    <link rel="stylesheet" href="@Url.Content("~/Resource/lib/DevExtreme/css/dx.common.css ")">
+    <link rel="dx-theme" data-theme="generic.light" href="@Url.Content("~/Resource/lib/DevExtreme/css/dx.light.css ")" data-active="true" />
+    <link rel="dx-theme" data-theme="generic.light.compact" href="@Url.Content("~/Resource/lib/DevExtreme/css/dx.light.compact.css ")" data-active="false" />
+
+    <link rel="stylesheet" href="@Url.Content("~/Resource/css/Site.css ")">
+
+    <link rel="stylesheet" href="@Url.Content("~/Resource/lib/JQuery-expression-builder-2.1.1/src/expression-builder.css")" />
+
+
+
+    <!-- REQUIRED JS SCRIPTS -->
+    <!-- jQuery 3 -->
+    <script src="@Url.Content("~/Resource/scripts/jquery-3.1.0.min.js ")"></script>
+    <script src="@Url.Content("~/Resource/scripts/jquery.cookie.js ")"></script>
+    <script src="@Url.Content("~/Resource/scripts/core/NC.js ")"></script>
+    <!-- Bootstrap 3.3.7 -->
+    <script src="@Url.Content("~/Resource/lib/AdminLTE-2.4.2/bower_components/bootstrap/dist/js/bootstrap.min.js ")"></script>
+    <!-- AdminLTE App -->
+    <script src="@Url.Content("~/Resource/lib/AdminLTE-2.4.2/dist/js/adminlte.min.js ")"></script>
+    <script src="@Url.Content("~/Resource/lib/AdminLTE-2.4.2/bower_components/jquery-ui/jquery-ui.js ")"></script>
+    <!-- EJS template -->
+    <script src="@Url.Content("~/Resource/lib/jquery-template/dist/jquery.loadTemplate.js ")"></script>
+
+    <!-- Optionally, you can add Slimscroll and FastClick plugins.
+         Both of these plugins are recommended to enhance the
+         user experience. -->
+    <!-- DevExtreme include -->
+    <script src="@Url.Content("~/Resource/lib/DevExtreme/js/cldr.js ")"></script>
+    <script src="@Url.Content("~/Resource/lib/DevExtreme/js/cldr/event.js ")"></script>
+    <script src="@Url.Content("~/Resource/lib/DevExtreme/js/cldr/supplemental.js ")"></script>
+    <script src="@Url.Content("~/Resource/lib/DevExtreme/js/cldr/unresolved.js ")"></script>
+
+    <script src="@Url.Content("~/Resource/lib/DevExtreme/js/globalize.js ")"></script>
+    <script src="@Url.Content("~/Resource/lib/DevExtreme/js/globalize/message.js ")"></script>
+    <script src="@Url.Content("~/Resource/lib/DevExtreme/js/globalize/number.js ")"></script>
+    <script src="@Url.Content("~/Resource/lib/DevExtreme/js/globalize/currency.js ")"></script>
+    <script src="@Url.Content("~/Resource/lib/DevExtreme/js/globalize/date.js ")"></script>
+
+    <script src="@Url.Content("~/Resource/lib/DevExtreme/js/jszip.js ")"></script>
+    <script src="@Url.Content("~/Resource/lib/DevExtreme/js/dx.all.debug.js ")"></script>
+    <script src="@Url.Content("~/Resource/lib/DevExtreme/js/dx.aspnet.mvc.js ")"></script>
+    <script src="@Url.Content("~/Resource/lib/DevExtreme/js/dx.aspnet.data.js ")"></script>
+
+
+    <script src="@Url.Content("~/Resource/scripts/css-icons.js ")"></script>
+
+    <script src="@Url.Content("~/Resource/scripts/core/NCStore.js ")"></script>
+    <script src="@Url.Content("~/Resource/scripts/core/NCData.js ")"></script>
+</head>
+<!--
+BODY TAG OPTIONS:
+=================
+Apply one or more of the following classes to get the
+desired effect
+|---------------------------------------------------------|
+| SKINS         | skin-blue                               |
+|               | skin-black                              |
+|               | skin-purple                             |
+|               | skin-yellow                             |
+|               | skin-red                                |
+|               | skin-green                              |
+|---------------------------------------------------------|
+|LAYOUT OPTIONS | fixed                                   |
+|               | layout-boxed                            |
+|               | layout-top-nav                          |
+|               | sidebar-collapse                        |
+|               | sidebar-mini                            |
+|---------------------------------------------------------|
+-->
+
+<body class="hold-transition skin-red sidebar-mini">
+    <input type="hidden" id="token" value="{{#TOKEN#}}" />
+    <input type="hidden" id="base_url" value="@String.Format("{0}://{1}:{2}/",Request.Url.Scheme,Request.Url.Host, "8080")" />
+    <script>
+        setCurrentId();
+        setOrgId();
+        setUserName();
+        $("#base_url").val("http://" + window.location.hostname + ":8080/");
+    </script> {{#ACL#}}
+
+    <div class="wrapper">
+        <!-- Main Header -->
+        <header class="main-header">
+            <!-- Logo -->
+            <a href="#" class="logo">
+                <!-- mini logo for sidebar mini 50x50 pixels -->
+                <span class="logo-mini"><b>KEVN</b></span>
+                <!-- logo for regular state and mobile devices -->
+                <span class="logo-lg"><b>Kerry Express</b></span>
+            </a>
+            <!-- Header Navbar -->
+            <nav class="navbar navbar-static-top" role="navigation">
+                <!-- Sidebar toggle button-->
+                <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
+                    <span class="sr-only">Toggle navigation</span>
+                </a>
+                <!-- Navbar Right Menu -->
+                <div class="navbar-custom-menu">
+                    <ul class="nav navbar-nav">
+
+                        <!-- User Account Menu -->
+                        <li class="dropdown user user-menu">
+                            <!-- Menu Toggle Button -->
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                <!-- The user image in the navbar-->
+                                <img src="@Url.Content("~/Resource/images/Profiles/default.png ")" class="user-image" alt="User Image">
+                                <!-- hidden-xs hides the username on small devices so only the image appears. -->
+                                <span class="hidden-xs" id="userInfo">{{#USERINFO#}}</span>
+                            </a>
+                            <ul class="dropdown-menu">
+
+                                <!-- Menu Footer-->
+                                <li class="user-footer">
+                                    <div class="pull-left">
+                                        <a href="/Bootstrap/Bootstrap/Load/25" class="btn btn-default btn-flat">Change Password</a>
+                                    </div>
+                                    <div class="pull-right">
+                                        <a href="/Account/Account/Logout" class="btn btn-default btn-flat">Sign out</a>
+                                    </div>
+                                </li>
+                            </ul>
+                        </li>
+                        <!-- Control Sidebar Toggle Button -->
+                        <li>
+                            <a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </header>
+        <!-- Left side column. contains the logo and sidebar -->
+        <aside class="main-sidebar">
+            <!-- sidebar: style can be found in sidebar.less -->
+            <section class="sidebar">
+                <!-- search form (Optional) -->
+                <form action="#" method="get" class="sidebar-form">
+                    <div class="input-group">
+                        <input type="text" name="q" class="form-control" placeholder="Search...">
+                        <span class="input-group-btn">
+                            <button type="submit" name="search" id="search-btn" class="btn btn-flat">
+                                <i class="fa fa-search"></i>
+                            </button>
+                        </span>
+                    </div>
+                </form>
+                <!-- /.search form -->
+                <!-- Sidebar Menu -->
+                <!-- Sidebar Menu -->
+                {{=SYSMENU=}}
+                <!-- /.sidebar-menu -->
+                <!-- /.sidebar-menu -->
+            </section>
+            <!-- /.sidebar -->
+        </aside>
+        <!-- Content Wrapper. Contains page content -->
+        <div class="content-wrapper">
+            <!-- Content Header (Page header) -->
+            <section class="content-header">
+                <h1>
+                    {{=PAGE_TITLE=}}
+                    <!-- <small>Optional description</small>-->
+                </h1>
+                <!--
+                <ol class="breadcrumb">
+                    <li><a href="#"><i class="fa fa-dashboard"></i> Level</a></li>
+                    <li class="active">Here</li>
+                </ol>
+                    -->
+            </section>
+            <!-- Main content -->
+            <section class="content container-fluid">
+                <!--------------------------
+                  | Your Page Content Here |
+                  -------------------------->
+                {{=PAGELAYOUT=}}
+            </section>
+            <!-- /.content -->
+        </div>
+        <!-- /.content-wrapper -->
+        <!-- Main Footer -->
+        <footer class="main-footer">
+            <!-- To the right -->
+            <!--<div class="pull-right hidden-xs">
+        Anything you want
+    </div>-->
+            <!-- Default to the left -->
+            <strong>Copyright &copy; 2018 <a href="#">KEVN</a>.</strong> All rights reserved.
+            <div class="pull-right" style="display:none">
+                <!-- <span class="skype-button rectangle textonly" data-contact-id="live:vthinh.nguyen" data-text="?" data-color="#ff8040"></span>
+                <span class="skype-chat" data-color-message="#ff8040"></span>
+                <script src="https://swc.cdn.skype.com/sdk/v1/sdk.min.js"></script> -->
+                <button type="button" class="btn bg-orange btn-flat" id="showChatBox"><i class='fa fa-wechat'></i></button>
+            </div>
+            <div class="box box-warning direct-chat direct-chat-warning  box-solid" style="display: none; width: 250px; position: fixed; bottom: -29px; right: 5px;"
+                id="chatBox">
+                <div class="box-header with-border">
+                    <h3 class="box-title"><span class='pull-left header'><i class="fa fa-wechat"></i> Fun Chat</span></h3>
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="hide" id="hideChatBox"><i class="fa fa-times"></i>
+                        </button>
+                    </div>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <!-- Conversations are loaded here -->
+                    <div class="direct-chat-messages" id="bodyChat">
+                    </div>
+                </div>
+                <!-- /.box-body -->
+                <div class="box-footer">                    
+                        <div class="input-group">
+                            <input type="text" name="message" placeholder="Type Message ..." class="form-control" id="chatMessage">
+                            <span class="input-group-btn">
+                                <button type="button" class="btn btn-warning btn-flat" id="chatSend">Send</button>
+                            </span>
+                        </div>                    
+                </div>
+                <!-- /.box-footer-->
+            </div>
+            <script>
+                $("#showChatBox").click(function () {
+                    $("#chatBox").show();
+                    $.cookie("showChatBox", true, { expires: 7, path: '/' });
+                    if(dataChat.length==0){
+                        appendChat({
+                                user_id:0,
+                                name:"SimSimi",
+                                date: new Date(),
+                                text:"Chào. Tui chỉ chat vui thôi. Có vài từ hơi thô đừng phản cảm..."
+                            });
+                    }
+                });
+                $("#hideChatBox").click(function () {
+                    $("#chatBox").hide();
+                    $.cookie("showChatBox", false, { expires: 7, path: '/' });
+                });
+                let show = $.cookie("showChatBox");
+                if (show=="true") {
+                    $("#chatBox").show();
+                }
+                $("#chatSend").click(function () {
+                    let value = $("#chatMessage").val();
+                    createAndAdd(value);
+                    $("#chatMessage").val("");
+                });
+                $("#chatMessage").on('keyup', function (e) {
+                    if (e.keyCode == 13) {
+                        let value = $("#chatMessage").val();
+                        createAndAdd(value);
+                        $("#chatMessage").val("");
+                    }
+                });
+
+                var createAndAdd = function(value){                    
+                    let user = $("#userInfo").text().replace("[","").replace("]","").replace(__USERNAME__,"");
+                    sendMessage(value);
+                    let tmp = {
+                        user_id:__USERID__,
+                        name:user,
+                        date: new Date(),
+                        text:value
+                    };
+                    dataChat.push(tmp);
+                    appendChat(tmp);
+                }
+
+                
+
+                var sendMessage = function(mess){
+                    $.ajax({
+                        url:getURL("api/core/chat/getSimSimi"),
+                        data:{
+                            text:mess,
+                        },
+                        success:function(data){
+                            let tmp = {
+                                user_id:0,
+                                name:"SimSimi",
+                                date: new Date(),
+                                text:data.response
+                            }
+                            dataChat.push(tmp);
+                            appendChat(tmp);
+                        }
+                    });
+                }
+
+                var dataChat = [];
+                var saveDataChat = function () {
+                    let tmp = JSON.stringify(dataChat);
+                    localStorage.setItem("dataChat", tmp);
+                }
+                var loadDataChat = function () {
+                    let dat = localStorage.getItem("dataChat");
+                    dataChat = JSON.parse(dat);
+                }
+
+                var appendChat = function(tmp){
+                    let dam = $("<div class='direct-chat-msg'>");
+                    if (tmp.user_id == __USERID__) {
+                        $(dam).addClass("right");
+                    }
+                    $(dam).append(
+                        $("<div class='direct-chat-info clearfix'>").append(
+                            $("<span class='direct-chat-name'>").addClass(tmp.user_id == __USERID__ ? "pull-right" : "pull-left").text(tmp.name),
+                            $("<span class='direct-chat-timestamp'>").addClass(tmp.user_id == __USERID__ ? "pull-left" : "pull-right").text(tmp.date.toLocaleString())
+                        ),
+                        $("<img class='direct-chat-img' src='/Resource/images/Profiles/"+(tmp.user_id==0?"simsimi":"default")+".png'>"),
+                        $("<div class='direct-chat-text'>").text(tmp.text)
+                    );
+                    $(dam).appendTo($("#bodyChat"));
+                    var elem = document.getElementById('bodyChat');
+                    elem.scrollTop = elem.scrollHeight;
+                }
+                var displayDataChat = function (count = 100) {
+                    let fix = dataChat.sort((a, b) => {
+                        return b.date > a.date;
+                    }).slice(0, 10);
+                    let div = $("#bodyChat");
+                    $(div).html("");
+                    for (let i = 0; i < Math.min(fix.length, count); i++) {
+                        let tmp = fix[i];
+                        appendChat(tmp);
+                    }                    
+                }
+            </script>
+        </footer>
+        <!-- Control Sidebar -->
+        <aside class="control-sidebar control-sidebar-dark">
+            <!-- Create the tabs -->
+            <ul class="nav nav-tabs nav-justified control-sidebar-tabs">
+                <li class="active"><a href="#control-sidebar-home-tab" data-toggle="tab"><i class="fa fa-home"></i></a></li>
+                <li><a href="#control-sidebar-settings-tab" data-toggle="tab"><i class="fa fa-gears"></i></a></li>
+            </ul>
+            <!-- Tab panes -->
+            <div class="tab-content">
+                <!--
+                <!-- Home tab content -->
+                <div class="tab-pane active" id="control-sidebar-home-tab">
+
+                </div>
+                <!-- /.tab-pane -->
+                <!-- Stats tab content -->
+                <div class="tab-pane" id="control-sidebar-stats-tab">Stats Tab Content</div>
+                <!-- /.tab-pane -->
+                <!-- Settings tab content -->
+                <div class="tab-pane" id="control-sidebar-settings-tab">
+
+                </div>
+                <!-- /.tab-pane -->
+            </div>
+        </aside>
+        <!-- /.control-sidebar -->
+        <!-- Add the sidebar's background. This div must be placed
+        immediately after the control sidebar -->
+        <div class="control-sidebar-bg"></div>
+    </div>
+    <!-- ./wrapper -->
+
+</body>
+
+</html>

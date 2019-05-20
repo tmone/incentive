@@ -1,0 +1,210 @@
+﻿@inherits System.Web.Mvc.WebViewPage
+@{
+    Layout = "~/Layout/LAdmin.cshtml";
+}
+<div class="row">
+    <div class="col-md-6">
+        <!-- OrgChart -->
+        <!-- general form elements disabled -->
+        <div class="box box-warning">
+            <div class="box-header with-border">
+                <h3 class="box-title">Roles</h3>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+                <div id="orgchart">
+
+                </div>
+            </div>
+            <!-- /.box-body -->
+        </div>
+        <!-- /.box -->
+    </div>
+    <div class="col-md-6">
+        <!-- OrgChart -->
+        <!-- general form elements disabled -->
+        <div class="box box-warning">
+            <div class="box-header with-border">
+                <h3 class="box-title">User</h3>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+
+            </div>
+            <!-- /.box-body -->
+        </div>
+        <!-- /.box -->
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        var arrayStore;
+        var ID;
+
+        $(function () {
+            $("#orgchart").dxTreeList({
+                //dataSource: {
+                //    store: {
+                //        type: 'json',
+                //        url: $("#base_url").val() + 'api/core/orgchart',
+                //        key: 'id'
+                //    },
+                //    select: ['id', 'org_name','_active']
+                //},//
+                dataSource: {
+                    //filter: ["parent_id", "=", 0],
+                    key: "id",
+                    load: function () {
+                        if (arrayStore) {
+                            return arrayStore.load();
+                        } else {
+                            return $.ajax({
+                                url: getURL('api/core/role'),
+                                method: "GET"
+                            }).done(function (data) {
+                                arrayStore = new DevExpress.data.ArrayStore({
+                                    key: "id",
+                                    data: data
+                                });
+                            });
+                        }
+                    },
+                    update: function (key, values) {
+                        return $.ajax({
+                            url: getURL('api/core/role/' + key),
+                            method: "PUT",
+                            data: values
+                            //beforeSend: beforeSend
+                        }).done(function () {
+                            arrayStore.update(key, values);
+                        })
+                    },
+                    insert: function (values) {
+                        var list = $("#orgchart").dxTreeList("instance");
+                        var row = list.getSelectedRowsData();
+                        var datapost = values;
+                        //console.log(datapost);
+                        return $.ajax({
+                            url: getURL('api/core/role'),
+                            method: "POST",
+                            data: datapost
+                        }).done(function (e) {
+                            datapost.id = e[0].id;
+                            arrayStore.insert(datapost);
+                        })
+                    },
+                    remove: function (key) {
+                        return $.ajax({
+                            url: getURL('api/core/role/' + key),
+                            method: "DELETE"
+                        }).done(function () {
+                            arrayStore.remove(key);
+                        })
+                    }
+                },
+                editing: {
+                    mode: "form",
+                    allowAdding: true,
+                    allowUpdating: true,
+                    allowDeleting: true,
+                    form: {
+                        colCount: 1,
+                    }
+                },//
+                keyExpr: "id",
+                parentIdExpr: "parent_id",
+                columnAutoWidth: true,
+                wordWrapEnabled: true,
+                //expandedRowKeys: [1, 2],
+                //selectedRowKeys: [1, 29, 42],
+                searchPanel: {
+                    visible: true,
+                },
+                onContextMenuPreparing: function (e) {
+                    if (e.row.rowType === "data") {
+                        e.items = [{
+                            text: "Insert",
+                            onItemClick: function () {
+                                $("#orgchart").dxTreeList("instance").addRow();
+                            }
+                        },
+                        {
+                            text: "Edit",
+                            onItemClick: function () {
+                                $("#orgchart").dxTreeList("instance").editRow(e.row.rowIndex);
+                            }
+                        },
+                        {
+                            text: "Delete",
+                            onItemClick: function () {
+                                $("#orgchart").dxTreeList("instance").deleteRow(e.row.rowIndex);
+                            }
+                        },
+                        {
+                            text: "Set default",
+                            beginGroup: true,
+                            onItemClick: function () {
+                                Devexpress.ui.notify(e.row.rowIndex);
+                            }
+                        }];
+                    }
+                },
+                headerFilter: {
+                    visible: true
+                },
+                selection: {
+                    mode: "single"
+                },
+                columns: [
+                    {
+                        dataField: "role_name",
+                        caption: "Name"
+                    }
+                    , {
+                        dataField: "description"
+                    }
+                    , {
+                        dataField: "weight",
+                        dataType: "number",
+                        visible: false,
+
+                    }
+                    //, {
+                    //    dataField: "_active",
+                    //    caption: "Active",
+                    //    dataType: "boolean",
+                    //    formItem: {
+                    //        visible: false
+                    //    },
+                    //    width:90
+                    //}
+                    , {
+                        dataField: "parent_id",
+                        caption: "Parent",
+                        visible: false,
+                        lookup: {
+                            dataSource: function (options) {
+                                if (arrayStore)
+                                    return {
+                                        store: arrayStore._array,
+                                        filter: ID ? ["!", ["id", "=", ID]] : null,
+                                    }
+                                return [];
+                            },
+                            valueExpr: "id",
+                            displayExpr: "role_name"
+                        }
+                    }
+                ],
+                onInitNewRow: function (e) {
+                    e.data.parent_id = 0;
+                    e.data.weight = 1;
+                },
+                onEditingStart: function (e) {
+                    ID = e.data.id;
+                }
+            });
+        });
+
+    });
+</script>

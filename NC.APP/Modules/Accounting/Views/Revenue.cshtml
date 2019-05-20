@@ -1,0 +1,26 @@
+﻿@inherits System.Web.Mvc.WebViewPage
+    
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title></title>
+    <script src="@Url.Content("~/Resource/scripts/app/Accounting/Revenue.js")"></script>
+    <style>
+        .form-fix {
+            padding-bottom: 10px;
+        }
+        .height100{
+            height:100%;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <script>
+            var rev = new Revenue();
+        </script>
+    </div>
+</body>
+</html>
