@@ -1,0 +1,133 @@
+<?xml version="1.0"?>
+<xs:schema id="NewDataSet" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+  <xs:element name="NewDataSet" msdata:IsDataSet="true" msdata:UseCurrentLocale="true">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="nc_acc_kpi_kpi_new">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="IN_MONTH" type="xs:dateTime" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="nc_acc_kpi_kpi">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="SALE_MAN" type="xs:string" minOccurs="0" />
+              <xs:element name="IN_MONTH" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="AR" type="xs:decimal" minOccurs="0" />
+              <xs:element name="SettingType" type="xs:int" minOccurs="0" />
+              <xs:element name="SalerParent" type="xs:string" minOccurs="0" />
+              <xs:element name="PriceType1" type="xs:decimal" minOccurs="0" />
+              <xs:element name="PriceType2" type="xs:decimal" minOccurs="0" />
+              <xs:element name="PriceType3" type="xs:decimal" minOccurs="0" />
+              <xs:element name="PriceType4" type="xs:decimal" minOccurs="0" />
+              <xs:element name="IncentiveType1" type="xs:decimal" minOccurs="0" />
+              <xs:element name="BonusType1" type="xs:decimal" minOccurs="0" />
+              <xs:element name="IncentiveType2" type="xs:decimal" minOccurs="0" />
+              <xs:element name="IncentiveType3" type="xs:decimal" minOccurs="0" />
+              <xs:element name="IncentiveType4" type="xs:decimal" minOccurs="0" />
+              <xs:element name="ThreeMonthAR" type="xs:decimal" minOccurs="0" />
+              <xs:element name="AfterAR" type="xs:decimal" minOccurs="0" />
+              <xs:element name="TARGET" type="xs:decimal" minOccurs="0" />
+              <xs:element name="KPI" type="xs:decimal" minOccurs="0" />
+              <xs:element name="ZONE1" type="xs:string" minOccurs="0" />
+              <xs:element name="ZONE2" type="xs:string" minOccurs="0" />
+              <xs:element name="ZONE3" type="xs:string" minOccurs="0" />
+              <xs:element name="ZONE4" type="xs:string" minOccurs="0" />
+              <xs:element name="ZONE5" type="xs:string" minOccurs="0" />
+              <xs:element name="IncentiveTotal" type="xs:decimal" minOccurs="0" />
+              <xs:element name="name" type="xs:string" minOccurs="0" />
+              <xs:element name="description" type="xs:string" minOccurs="0" />
+              <xs:element name="type" type="xs:int" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="nc_acc_kpi_data">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="ma_kh" type="xs:string" minOccurs="0" />
+              <xs:element name="ten_kh" type="xs:string" minOccurs="0" />
+              <xs:element name="join_date" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="customer_type" type="xs:int" minOccurs="0" />
+              <xs:element name="SERVICE_PERIOD" type="xs:int" minOccurs="0" />
+              <xs:element name="IN_MONTH" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="doanh_thu" type="xs:decimal" minOccurs="0" />
+              <xs:element name="num_package" type="xs:int" minOccurs="0" />
+              <xs:element name="dc" type="xs:decimal" minOccurs="0" />
+              <xs:element name="cost" type="xs:decimal" minOccurs="0" />
+              <xs:element name="BILL_INVOICE" type="xs:decimal" minOccurs="0" />
+              <xs:element name="cost_per_kg" type="xs:decimal" minOccurs="0" />
+              <xs:element name="BILL_OTHER" type="xs:decimal" minOccurs="0" />
+              <xs:element name="COST_PER_SHIPMENT" type="xs:decimal" minOccurs="0" />
+              <xs:element name="person_com_rate" type="xs:decimal" minOccurs="0" />
+              <xs:element name="person_com_target" type="xs:string" minOccurs="0" />
+              <xs:element name="customer_com_rate" type="xs:decimal" minOccurs="0" />
+              <xs:element name="customer_com_target" type="xs:string" minOccurs="0" />
+              <xs:element name="sale_com_rate" type="xs:decimal" minOccurs="0" />
+              <xs:element name="sale_com_target" type="xs:string" minOccurs="0" />
+              <xs:element name="invoice_amount" type="xs:decimal" minOccurs="0" />
+              <xs:element name="receipt_amount" type="xs:decimal" minOccurs="0" />
+              <xs:element name="invoice_date" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="payment_date" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="AR_DELAY" type="xs:int" minOccurs="0" />
+              <xs:element name="ACT_CUSTOMER_COM_RATE" type="xs:decimal" minOccurs="0" />
+              <xs:element name="ACT_CUSTOMER_COM_AMOUNT" type="xs:decimal" minOccurs="0" />
+              <xs:element name="ACT_CUSTOMER_COM_TARGET" type="xs:string" minOccurs="0" />
+              <xs:element name="ACT_SALE_COM_TARGET" type="xs:string" minOccurs="0" />
+              <xs:element name="ACT_SALE_COM_RATE" type="xs:decimal" minOccurs="0" />
+              <xs:element name="ACT_SALE_COM_AMOUNT" type="xs:decimal" minOccurs="0" />
+              <xs:element name="TARGET" type="xs:decimal" minOccurs="0" />
+              <xs:element name="KPI" type="xs:decimal" minOccurs="0" />
+              <xs:element name="SALE_MAN" type="xs:string" minOccurs="0" />
+              <xs:element name="SALE_MAN_CHILD" type="xs:string" minOccurs="0" />
+              <xs:element name="REVENUE_PUBLIC" type="xs:decimal" minOccurs="0" />
+              <xs:element name="C_0201" type="xs:int" minOccurs="0" />
+              <xs:element name="S_0201" type="xs:decimal" minOccurs="0" />
+              <xs:element name="C_0202" type="xs:int" minOccurs="0" />
+              <xs:element name="S_0202" type="xs:decimal" minOccurs="0" />
+              <xs:element name="C_0203" type="xs:int" minOccurs="0" />
+              <xs:element name="S_0203" type="xs:decimal" minOccurs="0" />
+              <xs:element name="C_0205" type="xs:int" minOccurs="0" />
+              <xs:element name="S_0205" type="xs:decimal" minOccurs="0" />
+              <xs:element name="C_0207" type="xs:int" minOccurs="0" />
+              <xs:element name="S_0207" type="xs:decimal" minOccurs="0" />
+              <xs:element name="C_OTHER" type="xs:int" minOccurs="0" />
+              <xs:element name="S_OTHER" type="xs:decimal" minOccurs="0" />
+              <xs:element name="A_0201" type="xs:decimal" minOccurs="0" />
+              <xs:element name="A_0202" type="xs:decimal" minOccurs="0" />
+              <xs:element name="A_0203" type="xs:decimal" minOccurs="0" />
+              <xs:element name="A_0205" type="xs:decimal" minOccurs="0" />
+              <xs:element name="A_0207" type="xs:decimal" minOccurs="0" />
+              <xs:element name="A_OTHER" type="xs:decimal" minOccurs="0" />
+              <xs:element name="PriceType1" type="xs:decimal" minOccurs="0" />
+              <xs:element name="PriceType1A" type="xs:decimal" minOccurs="0" />
+              <xs:element name="PriceType1B" type="xs:decimal" minOccurs="0" />
+              <xs:element name="PriceType2" type="xs:decimal" minOccurs="0" />
+              <xs:element name="PriceType2A" type="xs:decimal" minOccurs="0" />
+              <xs:element name="PriceType2B" type="xs:decimal" minOccurs="0" />
+              <xs:element name="PriceType3" type="xs:decimal" minOccurs="0" />
+              <xs:element name="PriceType4" type="xs:decimal" minOccurs="0" />
+              <xs:element name="IncentiveType1" type="xs:decimal" minOccurs="0" />
+              <xs:element name="IncentiveType3" type="xs:decimal" minOccurs="0" />
+              <xs:element name="IncentiveType4" type="xs:decimal" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+    <xs:unique name="Constraint1">
+      <xs:selector xpath=".//nc_acc_kpi_kpi_new" />
+      <xs:field xpath="IN_MONTH" />
+    </xs:unique>
+    <xs:keyref name="nc_acc_kpi_kpi_newnc_acc_kpi_kpi" refer="Constraint1">
+      <xs:selector xpath=".//nc_acc_kpi_kpi" />
+      <xs:field xpath="IN_MONTH" />
+    </xs:keyref>
+  </xs:element>
+  <xs:annotation>
+    <xs:appinfo>
+      <msdata:Relationship name="nc_acc_kpi_kpinc_acc_kpi_data" msdata:parent="nc_acc_kpi_kpi" msdata:child="nc_acc_kpi_data" msdata:parentkey="SALE_MAN IN_MONTH" msdata:childkey="SALE_MAN IN_MONTH" />
+    </xs:appinfo>
+  </xs:annotation>
+</xs:schema>
