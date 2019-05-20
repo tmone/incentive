@@ -1,0 +1,639 @@
+<?xml version="1.0" encoding="utf-8"?>
+<module version="1.0" ref="NC">
+	<information>
+		<name>Asset</name>
+		<version>1.0</version>
+		<creationDate>05/09/2018</creationDate>
+		<author>KEVN Team</author>
+		<authorUrl></authorUrl>
+		<copyright>KEVN</copyright>
+		<description>Asset Management</description>
+	</information>	
+	<models>
+		<model name="nc_asset_state">
+			<columns>        
+			</columns>
+      <childs>
+        <child table="nc_asset_state_item" column="state_id"></child>                  
+      </childs>
+		</model>
+		<model name="nc_asset_category">
+			<columns>        
+			</columns>
+      <childs>
+        <child table="nc_asset_category_setting" column="cate_id"></child>  
+        <child table="nc_asset_item" column="cate_id"></child>  
+        <child table="nc_asset_report" column="cate_id"></child>                  
+      </childs>
+		</model>   
+    <model name="nc_asset_item">
+			<columns>        
+			</columns>
+      <childs>
+        <child table="nc_asset_property_data" column="item_id"></child>  
+        <child table="nc_asset_state_item" column="item_id"></child>  
+        <child table="nc_asset_store" column="item_id"></child>
+        <child table="nc_asset_store_export_detail" column="item_id"></child>
+        <child table="nc_asset_store_import_detail" column="item_id"></child>                   
+      </childs>
+		</model>  
+    <model name="nc_asset_property_group">
+			<columns>        
+			</columns>
+      <childs>
+        <child table="nc_asset_category" column="group_id"></child>  
+        <child table="nc_asset_property_detail" column="group_id"></child>  
+        <child table="nc_asset_property_group" column="group_id"></child>
+        <child table="nc_asset_property_group_order" column="group_id"></child>
+        <child table="nc_asset_property_ref" column="group_id"></child>                   
+      </childs>
+		</model> 
+    <model name="nc_asset_property_group">
+			<columns>        
+			</columns>
+      <childs>
+        <child table="nc_asset_property_group_order" column="group_ref_id"></child>  
+        <child table="nc_asset_property_ref" column="group_ref_id"></child>  
+      </childs>
+		</model>
+    <model name="nc_asset_property_detail">
+			<columns>        
+			</columns>
+      <childs>
+        <child table="nc_asset_category_setting" column="property_id"></child>  
+        <child table="nc_asset_property_data" column="property_id"></child>  
+        <child table="nc_asset_property_ref" column="property_id"></child>
+      </childs>
+		</model>
+    <model name="nc_asset_property_type">
+			<columns>        
+			</columns>
+      <childs>
+        <child table="nc_asset_property_detail" column="type_id"></child>
+      </childs>
+		</model>
+    <model name="nc_asset_property_type">
+			<columns>        
+			</columns>
+      <childs>
+        <child table="nc_asset_property_detail" column="type_id"></child>
+      </childs>
+		</model>
+    <model name="nc_master_unit">
+			<columns>        
+			</columns>
+      <childs>
+        <child table="nc_asset_property_detail" column="unit_id"></child>
+        <child table="nc_asset_store" column="unit_id"></child>
+        <child table="nc_asset_store_export_detail" column="unit_id"></child>
+        <child table="nc_asset_store_import_detail" column="unit_id"></child>
+      </childs>
+		</model>
+    <model name="nc_master_unit">
+			<columns>        
+			</columns>
+      <childs>
+        <child table="nc_asset_property_detail" column="unit_id"></child>
+        <child table="nc_asset_store" column="unit_id"></child>
+        <child table="nc_asset_store_export_detail" column="unit_id"></child>
+        <child table="nc_asset_store_import_detail" column="unit_id"></child>
+      </childs>
+		</model>
+    <model name="nc_asset_store_export">
+			<columns>        
+			</columns>
+      <childs>
+        <child table="nc_asset_store_export_detail" column="export_id"></child>
+      </childs>
+		</model>
+    <model name="nc_asset_store_import">
+			<columns>        
+			</columns>
+      <childs>
+        <child table="nc_asset_store_import_detail" column="import_id"></child>
+      </childs>
+		</model>
+	</models>
+	<crafts>
+    <!--craft-->
+    <craft>
+        <craftinfo> <!--  Infor for run Craft-->
+            <name>Category</name>
+            <model-ref>nc_asset_category</model-ref>
+            <title>Category List</title>
+            <app>Asset</app>
+            <description>Manage category of assetment</description>
+            <controller>Asset</controller>
+            <action>Category</action>
+            <view>/Modules/Asset/Views/Category.cshtml</view>
+        </craftinfo>
+        <acls> <!-- Infor for callback other action -->
+            <acl>
+              <name>add</name>
+              <title>Add New</title>
+              <app>Asset</app>
+              <controller>Category</controller>
+              <action>Post</action>
+              <description>Add new category in a node, it haved a parent</description>
+            </acl>
+            <acl>
+              <name>edit</name>
+              <title>Edit</title>
+              <app>Asset</app>
+              <controller>Category</controller>
+              <action>Put</action>
+              <description>Edit category selected</description>
+            </acl>
+            <acl>
+              <name>delete</name>
+              <title>Delete</title>
+              <app>Asset</app>
+              <controller>Category</controller>
+              <action>Delete</action>
+              <description>Delete category selected</description>
+            </acl>
+            <acl>
+              <name>addRoot</name>
+              <title>Add Root</title>
+              <app>Asset</app>
+              <controller>Category</controller>
+              <action>Post</action>
+              <description>Add a root category</description>
+            </acl>            
+        </acls>
+        <params><!-- Parameters -->
+          <!--External Link to Other Craft for contrains & refresh data-->
+          <param></param>
+        </params>
+    </craft>
+    <!--//craft-->
+    <!--craft-->
+    <craft>
+        <craftinfo> <!--  Infor for run Craft-->
+            <name>Item</name>
+            <model-ref>nc_asset_item</model-ref>
+            <title>Asset List</title>
+            <app>Asset</app>
+            <description>List of assetment</description>
+            <controller>Asset</controller>
+            <action>Item</action>
+            <view>/Modules/Asset/Views/Item.cshtml</view>
+        </craftinfo>
+        <acls> <!-- Infor for callback other action -->
+            <acl>
+              <name>add</name>
+              <title>Add New</title>
+              <app>Asset</app>
+              <controller>Item</controller>
+              <action>Post</action>
+              <description>Add new asset</description>
+            </acl>
+            <acl>
+              <name>edit</name>
+              <title>Edit</title>
+              <app>Asset</app>
+              <controller>Item</controller>
+              <action>Put</action>
+              <description>Edit asset selected</description>
+            </acl>
+            <acl>
+              <name>delete</name>
+              <title>Delete</title>
+              <app>Asset</app>
+              <controller>Item</controller>
+              <action>Delete</action>
+              <description>Delete asset selected</description>
+            </acl>                       
+        </acls>
+        <params><!-- Parameters -->
+          <!--External Link to Other Craft for contrains & refresh data-->
+          <param></param>
+        </params>
+    </craft>
+    <!--//craft-->   
+    <!--craft-->
+    <craft>
+        <craftinfo> <!--  Infor for run Craft-->
+            <name>PropertyGroup</name>
+            <model-ref>nc_asset_property_group</model-ref>
+            <title>Group List</title>
+            <app>Asset</app>
+            <description>Manage group of property</description>
+            <controller>Asset</controller>
+            <action>Group</action>
+            <view>/Modules/Asset/Views/Group.cshtml</view>
+        </craftinfo>
+        <acls> <!-- Infor for callback other action -->
+            <acl>
+              <name>add</name>
+              <title>Add New</title>
+              <app>Asset</app>
+              <controller>Group</controller>
+              <action>Post</action>
+              <description>Add new group in a node, it haved a parent</description>
+            </acl>
+            <acl>
+              <name>edit</name>
+              <title>Edit</title>
+              <app>Asset</app>
+              <controller>Group</controller>
+              <action>Put</action>
+              <description>Edit group selected</description>
+            </acl>
+            <acl>
+              <name>delete</name>
+              <title>Delete</title>
+              <app>Asset</app>
+              <controller>Group</controller>
+              <action>Delete</action>
+              <description>Delete group selected</description>
+            </acl>
+            <acl>
+              <name>addRoot</name>
+              <title>Add Root</title>
+              <app>Asset</app>
+              <controller>Group</controller>
+              <action>Post</action>
+              <description>Add a root group</description>
+            </acl>  
+            <acl>
+              <name>config</name>
+              <title>Config</title>
+              <app>Asset</app>
+              <controller>Group</controller>
+              <action>Config</action>
+              <description>Configure group order</description>
+            </acl>
+            <acl>
+              <name>property</name>
+              <title>Design Property</title>
+              <app>Asset</app>
+              <controller>Group</controller>
+              <action>Property</action>
+              <description>Manager property in group</description>
+            </acl>                     
+        </acls>
+        <params><!-- Parameters -->
+          <!--External Link to Other Craft for contrains & refresh data-->
+          <param></param>
+        </params>
+    </craft>
+    <!--//craft-->  
+    <!--craft-->
+    <craft>
+        <craftinfo> <!--  Infor for run Craft-->
+            <name>PropertyDetail</name>
+            <model-ref>nc_asset_property_detail</model-ref>
+            <title>Property List</title>
+            <app>Asset</app>
+            <description>Property List</description>
+            <controller>Asset</controller>
+            <action>Property</action>
+            <view>/Modules/Asset/Views/Property.cshtml</view>
+        </craftinfo>
+        <acls> <!-- Infor for callback other action -->
+            <acl>
+              <name>add</name>
+              <title>Add New</title>
+              <app>Asset</app>
+              <controller>Property</controller>
+              <action>Post</action>
+              <description>Add new Property</description>
+            </acl>
+            <acl>
+              <name>edit</name>
+              <title>Edit</title>
+              <app>Asset</app>
+              <controller>Property</controller>
+              <action>Put</action>
+              <description>Edit Property selected</description>
+            </acl>
+            <acl>
+              <name>delete</name>
+              <title>Delete</title>
+              <app>Asset</app>
+              <controller>Property</controller>
+              <action>Delete</action>
+              <description>Delete Property selected</description>
+            </acl>                       
+        </acls>
+        <params><!-- Parameters -->
+          <!--External Link to Other Craft for contrains & refresh data-->
+          <param></param>
+        </params>
+    </craft>
+    <!--//craft-->  
+    <!--craft-->
+    <craft>
+        <craftinfo> <!--  Infor for run Craft-->
+            <name>CategorySetting</name>
+            <model-ref>nc_asset_category_setting</model-ref>
+            <title>Setting Category</title>
+            <app>Asset</app>
+            <description>Set expect input property in category</description>
+            <controller>Asset</controller>
+            <action>CategorySeting</action>
+            <view>/Modules/Asset/Views/CategorySeting.cshtml</view>
+        </craftinfo>
+        <acls> <!-- Infor for callback other action -->
+            <acl>
+              <name>add</name>
+              <title>Add New</title>
+              <app>Asset</app>
+              <controller>Property</controller>
+              <action>Post</action>
+              <description>Add new Property</description>
+            </acl>
+            <acl>
+              <name>edit</name>
+              <title>Edit</title>
+              <app>Asset</app>
+              <controller>Property</controller>
+              <action>Put</action>
+              <description>Edit Property selected</description>
+            </acl>
+            <acl>
+              <name>delete</name>
+              <title>Delete</title>
+              <app>Asset</app>
+              <controller>Property</controller>
+              <action>Delete</action>
+              <description>Delete Property selected</description>
+            </acl>                       
+        </acls>
+        <params><!-- Parameters -->
+          <!--External Link to Other Craft for contrains & refresh data-->
+          <param></param>
+        </params>
+    </craft>
+    <!--//craft--> 
+    <!--craft-->
+    <craft>
+        <craftinfo> <!--  Infor for run Craft-->
+            <name>Report</name>
+            <model-ref>nc_asset_report</model-ref>
+            <title>Report</title>
+            <app>Asset</app>
+            <description>Design report for user</description>
+            <controller>Asset</controller>
+            <action>Report</action>
+            <view>/Modules/Asset/Views/Report.cshtml</view>
+        </craftinfo>
+        <acls> <!-- Infor for callback other action -->
+            <acl>
+              <name>add</name>
+              <title>Add New</title>
+              <app>Asset</app>
+              <controller>Report</controller>
+              <action>Post</action>
+              <description>Add new report</description>
+            </acl>
+            <acl>
+              <name>edit</name>
+              <title>Edit</title>
+              <app>Asset</app>
+              <controller>Report</controller>
+              <action>Put</action>
+              <description>Edit report</description>
+            </acl>
+            <acl>
+              <name>delete</name>
+              <title>Delete</title>
+              <app>Asset</app>
+              <controller>Report</controller>
+              <action>Delete</action>
+              <description>Delete report selected</description>
+            </acl>
+            <acl>
+              <name>design</name>
+              <title>Design</title>
+              <app>Asset</app>
+              <controller>Report</controller>
+              <action>Design</action>
+              <description>Design report</description>
+            </acl>                       
+        </acls>
+        <params><!-- Parameters -->
+          <!--External Link to Other Craft for contrains & refresh data-->
+          <param></param>
+        </params>
+    </craft>
+    <!--//craft--> 
+    <!--craft-->
+    <craft>
+        <craftinfo> <!--  Infor for run Craft-->
+            <name>State</name>
+            <model-ref>nc_asset_state</model-ref>
+            <title>State</title>
+            <app>Asset</app>
+            <description>Assetment State List</description>
+            <controller>Asset</controller>
+            <action>State</action>
+            <view>/Modules/Asset/Views/State.cshtml</view>
+        </craftinfo>
+        <acls> <!-- Infor for callback other action -->
+            <acl>
+              <name>add</name>
+              <title>Add New</title>
+              <app>Asset</app>
+              <controller>State</controller>
+              <action>Post</action>
+              <description>Add new state</description>
+            </acl>
+            <acl>
+              <name>edit</name>
+              <title>Edit</title>
+              <app>Asset</app>
+              <controller>State</controller>
+              <action>Put</action>
+              <description>Edit state</description>
+            </acl>
+            <acl>
+              <name>delete</name>
+              <title>Delete</title>
+              <app>Asset</app>
+              <controller>State</controller>
+              <action>Delete</action>
+              <description>Delete state selected</description>
+            </acl>                                   
+        </acls>
+        <params><!-- Parameters -->
+          <!--External Link to Other Craft for contrains & refresh data-->
+          <param></param>
+        </params>
+    </craft>
+    <!--//craft--> 
+    <!--craft-->
+    <craft>
+        <craftinfo> <!--  Infor for run Craft-->
+            <name>Store</name>
+            <model-ref>nc_asset_store</model-ref>
+            <title>Store</title>
+            <app>Asset</app>
+            <description>Store status</description>
+            <controller>Asset</controller>
+            <action>Store</action>
+            <view>/Modules/Asset/Views/Store.cshtml</view>
+        </craftinfo>
+        <acls> <!-- Infor for callback other action -->
+            <acl>
+              <name>import</name>
+              <title>Import Store</title>
+              <app>Asset</app>
+              <controller>Store</controller>
+              <action>Get</action>
+              <description>Import Store</description>
+            </acl>
+            <acl>
+              <name>export</name>
+              <title>Export Store</title>
+              <app>Asset</app>
+              <controller>Store</controller>
+              <action>Get</action>
+              <description>Export Store</description>
+            </acl>                                               
+        </acls>
+        <params><!-- Parameters -->
+          <!--External Link to Other Craft for contrains & refresh data-->
+          <param></param>
+        </params>
+    </craft>
+    <!--//craft--> 
+    <!--craft-->
+    <craft>
+        <craftinfo> <!--  Infor for run Craft-->
+            <name>StoreImport</name>
+            <model-ref>nc_asset_store_import</model-ref>
+            <title>Store Import</title>
+            <app>Asset</app>
+            <description>Store Import Task</description>
+            <controller>Asset</controller>
+            <action>StoreImport</action>
+            <view>/Modules/Asset/Views/StoreImport.cshtml</view>
+        </craftinfo>
+        <acls> <!-- Infor for callback other action -->
+            <acl>
+              <name>add</name>
+              <title>Add New</title>
+              <app>Asset</app>
+              <controller>StoreImport</controller>
+              <action>Post</action>
+              <description>Add a new Import Store</description>
+            </acl>
+            <acl>
+              <name>edit</name>
+              <title>Edit</title>
+              <app>Asset</app>
+              <controller>StoreImport</controller>
+              <action>Put</action>
+              <description>Edit a store import</description>
+            </acl>
+            <acl>
+              <name>delete</name>
+              <title>Delete</title>
+              <app>Asset</app>
+              <controller>StoreImport</controller>
+              <action>Delete</action>
+              <description>Delete a store import</description>
+            </acl>
+            <acl>
+              <name>addDetail</name>
+              <title>Add Detail</title>
+              <app>Asset</app>
+              <controller>StoreImportDetail</controller>
+              <action>Post</action>
+              <description>Add a new detail Import Store</description>
+            </acl>
+            <acl>
+              <name>editDetail</name>
+              <title>Edit Detail</title>
+              <app>Asset</app>
+              <controller>StoreImportDetail</controller>
+              <action>Put</action>
+              <description>Edit a detail store import</description>
+            </acl>
+            <acl>
+              <name>deleteDetail</name>
+              <title>Delete Detail</title>
+              <app>Asset</app>
+              <controller>StoreImportDetail</controller>
+              <action>Delete</action>
+              <description>Delete a detail store import</description>
+            </acl>                                                           
+        </acls>
+        <params><!-- Parameters -->
+          <!--External Link to Other Craft for contrains & refresh data-->
+          <param></param>
+        </params>
+    </craft>
+    <!--//craft-->
+    <!--craft-->
+    <craft>
+        <craftinfo> <!--  Infor for run Craft-->
+            <name>StoreExport</name>
+            <model-ref>nc_asset_store_export</model-ref>
+            <title>Store Export</title>
+            <app>Asset</app>
+            <description>Store Export Task</description>
+            <controller>Asset</controller>
+            <action>StoreExport</action>
+            <view>/Modules/Asset/Views/StoreExport.cshtml</view>
+        </craftinfo>
+        <acls> <!-- Infor for callback other action -->
+            <acl>
+              <name>add</name>
+              <title>Add New</title>
+              <app>Asset</app>
+              <controller>StoreExport</controller>
+              <action>Post</action>
+              <description>Add a new Export Store</description>
+            </acl>
+            <acl>
+              <name>edit</name>
+              <title>Edit</title>
+              <app>Asset</app>
+              <controller>StoreExport</controller>
+              <action>Put</action>
+              <description>Edit a store Export</description>
+            </acl>
+            <acl>
+              <name>delete</name>
+              <title>Delete</title>
+              <app>Asset</app>
+              <controller>StoreExport</controller>
+              <action>Delete</action>
+              <description>Delete a store export</description>
+            </acl>
+            <acl>
+              <name>addDetail</name>
+              <title>Add Detail</title>
+              <app>Asset</app>
+              <controller>StoreExportDetail</controller>
+              <action>Post</action>
+              <description>Add a new detail export Store</description>
+            </acl>
+            <acl>
+              <name>editDetail</name>
+              <title>Edit Detail</title>
+              <app>Asset</app>
+              <controller>StoreExportDetail</controller>
+              <action>Put</action>
+              <description>Edit a detail store export</description>
+            </acl>
+            <acl>
+              <name>deleteDetail</name>
+              <title>Delete Detail</title>
+              <app>Asset</app>
+              <controller>StoreExportDetail</controller>
+              <action>Delete</action>
+              <description>Delete a detail store Export</description>
+            </acl>                                                           
+        </acls>
+        <params><!-- Parameters -->
+          <!--External Link to Other Craft for contrains & refresh data-->
+          <param></param>
+        </params>
+    </craft>
+    <!--//craft--> 
+  </crafts>
+</module>

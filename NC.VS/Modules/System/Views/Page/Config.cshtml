@@ -1,0 +1,1391 @@
+﻿@inherits System.Web.Mvc.WebViewPage
+@{
+    Layout = "~/Layout/LAdmin.cshtml";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title></title>
+    <!-- Layout It-->
+    <link href="@Url.Content("~/Resource/lib/LayoutIt/css/layoutit.css")" rel="stylesheet">
+    <script src="@Url.Content("~/Resource/lib/LayoutIt/js/jquery-ui.js")"></script>
+    <script src="@Url.Content("~/Resource/lib/LayoutIt/js/jquery.htmlClean.js")"></script>
+    <script src="@Url.Content("~/Resource/lib/LayoutIt/js/scripts.js")"></script>
+    <script src="@Url.Content("~/Resource/lib/Ace_Tern/ace-builds/src-noconflict/ace.js")"></script>
+
+    <style>
+        .selected h4 {
+            cursor: no-drop
+        }
+
+        .drag-widget {
+            cursor: move
+        }
+
+        .selected .view {
+            cursor: move
+        }
+
+        .remove {
+            position: absolute;
+            right: 5px;
+            top: 5px;
+            z-index: 1;
+        }
+
+        .drag {
+            position: absolute;
+            left: 5px;
+            z-index: 1;
+            top: 5px;
+        }
+
+        .sidebar-nav-layout .view, .sidebar-nav-layout .remove, .sidebar-nav-layout .drag {
+            display: none;
+        }
+
+        .preview {
+            height: 30px;
+            margin: 2px;
+        }
+    </style>
+</head>
+<body>
+    <div class="box" id="beginLoad">
+        <div class="overlay" >
+            <i class="fa fa-refresh fa-spin"></i>
+        </div>
+    </div>
+    
+    <section class="sidebar" id="toobox-page" style="display:none">
+        <ul class="sidebar-menu" data-widget="tree">
+            <li class="active treeview menu-open">
+                <a href="#">
+                    <div class="pull-right popover-info">
+                        <i class="glyphicon glyphicon-question-sign"></i>
+                        <div class="popover fade right">
+                            <div class="arrow"></div>
+                            <h3 class="popover-title">help</h3>
+                            <div class="popover-content">
+                                Set your grid layout here, each grid has 12 columns, divided by space
+                            </div>
+                        </div>
+                    </div>
+                    <i class="fa fa-object-group"></i> <span>Layout</span>
+                </a>
+
+                <div class="sidebar-nav-layout">
+                    <ul class="nav nav-list accordion-group">
+                        <li class="rows" id="estRows">
+                            <div class="lyrow ui-draggable">
+                                <a href="#close" class="remove label label-danger">
+                                    <i class="glyphicon-remove glyphicon"></i>
+
+                                </a>
+                                <span class="drag label label-default">
+                                    <i class="glyphicon glyphicon-move"></i>
+
+                                </span>
+                                <div class="preview">
+                                    <i class="drag-widget fa fa-th" style="margin-left:0px"></i> <span>1 Column</span>
+                                    <span class="pull-right-container">
+                                        <small class="label pull-right bg-blue" style="height:17px;margin-right: 55px;margin-top: 5px;width: 60px;">12</small>
+                                    </span>
+                                    <input value="12" class="form-control" type="text" style="display:none">
+                                </div>
+                                <div class="view">
+                                    <div class="row clearfix">
+                                        <div class="col-md-12 column"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="lyrow ui-draggable">
+                                <a href="#close" class="remove label label-danger">
+                                    <i class="glyphicon-remove glyphicon"></i>
+
+                                </a>
+                                <span class="drag label label-default">
+                                    <i class="glyphicon glyphicon-move"></i>
+
+                                </span>
+                                <div class="preview">
+                                    <i class="drag-widget fa fa-th" style="margin-left:0px"></i> <span>2 Column</span>
+                                    <span class="pull-right-container">
+                                        <small class="label pull-right bg-blue" style="height:17px;margin-right: 55px;margin-top: 5px;width: 30px;">6</small>
+                                        <small class="label pull-right bg-blue" style="height:17px;margin-right: 1px;margin-top: 5px;width: 30px;">6</small>
+                                    </span>
+                                    <input value="6 6" class="form-control" type="text" style="display:none">
+                                </div>
+                                <div class="view">
+                                    <div class="row clearfix">
+                                        <div class="col-md-6 column"></div>
+                                        <div class="col-md-6 column"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="lyrow ui-draggable">
+                                <a href="#close" class="remove label label-danger">
+                                    <i class="glyphicon-remove glyphicon"></i>
+
+                                </a>
+                                <span class="drag label label-default">
+                                    <i class="glyphicon glyphicon-move"></i>
+
+                                </span>
+                                <div class="preview">
+                                    <i class="drag-widget fa fa-th" style="margin-left:0px"></i> <span>2 Column</span>
+                                    <span class="pull-right-container">
+                                        <small class="label pull-right bg-blue" style="height:17px;margin-right: 55px;margin-top: 5px;width: 20px;">4</small>
+                                        <small class="label pull-right bg-blue" style="height:17px;margin-right: 1px;margin-top: 5px;width: 40px;">8</small>
+                                    </span>
+                                    <input value="8 4" class="form-control" type="text" style="display:none">
+                                </div>
+                                <div class="view">
+                                    <div class="row clearfix">
+                                        <div class="col-md-8 column"></div>
+                                        <div class="col-md-4 column"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="lyrow ui-draggable">
+                                <a href="#close" class="remove label label-danger">
+                                    <i class="glyphicon-remove glyphicon"></i>
+
+                                </a>
+                                <span class="drag label label-default">
+                                    <i class="glyphicon glyphicon-move"></i>
+
+                                </span>
+                                <div class="preview">
+                                    <i class="drag-widget fa fa-th" style="margin-left:0px"></i> <span>3 Column</span>
+                                    <span class="pull-right-container">
+                                        <small class="label pull-right bg-blue" style="height:17px;margin-right: 55px;margin-top: 5px;width: 20px;">4</small>
+                                        <small class="label pull-right bg-blue" style="height:17px;margin-right: 1px;margin-top: 5px;width: 20px;">4</small>
+                                        <small class="label pull-right bg-blue" style="height:17px;margin-right: 1px;margin-top: 5px;width: 20px;">4</small>
+                                    </span>
+
+                                    <input value="4 4 4" class="form-control" type="text" style="display:none">
+                                </div>
+                                <div class="view">
+                                    <div class="row clearfix">
+                                        <div class="col-md-4 column"></div>
+                                        <div class="col-md-4 column"></div>
+                                        <div class="col-md-4 column"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="lyrow ui-draggable">
+                                <a href="#close" class="remove label label-danger">
+                                    <i class="glyphicon-remove glyphicon"></i>
+
+                                </a>
+                                <span class="drag label label-default">
+                                    <i class="glyphicon glyphicon-move"></i>
+
+                                </span>
+                                <div class="preview">
+                                    <i class="drag-widget fa fa-th" style="margin-left:0px"></i> <span>3 Column</span>
+                                    <span class="pull-right-container">
+                                        <small class="label pull-right bg-blue" style="height:17px;margin-right: 55px;margin-top: 5px;width: 30px;">6</small>
+                                        <small class="label pull-right bg-blue" style="height:17px;margin-right: 1px;margin-top: 5px;width: 20px;">4</small>
+                                        <small class="label pull-right bg-blue" style="height:17px;margin-right: 1px;margin-top: 5px;width: 10px;">2</small>
+                                    </span>
+                                    <input value="2 6 4" class="form-control" type="text" style="display:none">
+                                </div>
+                                <div class="view">
+                                    <div class="row clearfix">
+                                        <div class="col-md-2 column"></div>
+                                        <div class="col-md-6 column"></div>
+                                        <div class="col-md-4 column"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="lyrow ui-draggable">
+                                <a href="#close" class="remove label label-danger">
+                                    <i class="glyphicon-remove glyphicon"></i>
+
+                                </a>
+                                <span class="drag label label-default">
+                                    <i class="glyphicon glyphicon-move"></i>
+
+                                </span>
+                                <div class="preview">
+                                    <i class="drag-widget fa fa-th" style="margin-left:0px"></i> <span>Custom</span>                                    
+                                    <input value="2 8 2" class="form-control custom-input" type="text" style="    width: 65px;    position: absolute;    top: 0px;    left: 80px;    font-size: 14px;    height: 17px;    padding: 0px;"> 
+                                </div>
+                                <div class="view">
+                                    <div class="row clearfix">
+                                        <div class="col-md-2 column"></div>
+                                        <div class="col-md-8 column"></div>
+                                        <div class="col-md-2 column"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+
+            <li class="active treeview menu-open">
+                <a href="#">
+                    <i class="fa fa-object-group"></i> <span>Extention</span>
+                </a>
+                <div class="sidebar-nav-layout">
+                    <ul class="nav nav-list accordion-group">
+                        <li class="rows" id="estRows">
+                            <div class="lyrow ui-draggable">
+                                <a href="#close" class="remove label label-danger">
+                                    <i class="glyphicon-remove glyphicon"></i>
+
+                                </a>
+                                <span class="drag label label-default">
+                                    <i class="glyphicon glyphicon-move"></i>
+
+                                </span>
+                                <div class="preview">
+                                    <i class="drag-widget fa fa-file-code-o" style="margin-left:20px"></i> <span>Script</span>                                    
+                                </div>
+                                <div class="view">
+                                    <div data-id="script">
+                                        <div class="alert alert-success alert-dismissible">
+                                            <i class="drag-widget fa fa-file-code-o" style="margin-left:20px"></i> <span>Script</span>
+                                        </div>
+                                        <div class="script" style="display:none" data-build="script"></div>
+                                    </div>                                    
+                                </div>
+                            </div>
+                            <div class="lyrow ui-draggable">
+                                <a href="#close" class="remove label label-danger">
+                                    <i class="glyphicon-remove glyphicon"></i>
+
+                                </a>
+                                <span class="drag label label-default">
+                                    <i class="glyphicon glyphicon-move"></i>
+
+                                </span>
+                                <div class="preview">
+                                    <i class="drag-widget fa fa-credit-card" style="margin-left:20px"></i> <span>Box</span>                                    
+                                </div>
+                                <div class="view">
+                                    <div data-id="box" class="box box-default">
+                                        <div class="box-header with-border">
+                                            <i class='fa fa-tag'></i>
+                                            <h3 class="box-title">Title</h3>
+                                            <div class="box-tools pull-right">
+                                                <button type="button" class="btn btn-box-tool" data-widget='collapse'><i class="fa fa-minus"></i></button>
+                                                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                                            </div>                                        
+                                        </div>                                        
+                                        <div class="box-body column">
+                                            
+                                        </div>                                     
+                                    </div>                                    
+                                </div>
+                            </div>                            
+                        </li>
+                    </ul>
+                </div>
+            </li>
+
+            <li class="active treeview menu-open">
+                <a href="#">
+                    <i class="fa fa-th"></i> <span>Widgets</span>
+                    <span class="pull-right-container">
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                    <div class="overlay" id="loading">
+                        <i class="fa fa-refresh fa-spin"></i>
+                    </div>
+                </a>
+
+                <div class="sidebar-nav-widget">
+                    <ul class="nav nav-list accordion-group">
+                        <li class="rows" id="estRowsW">
+
+                        </li>
+                    </ul>
+                </div>
+
+                <div id="widget"></div>
+                <script>
+                            var pageId = '@Html.Raw(ViewBag.ID)';
+                    var CRAFT = '@Html.Raw(ViewBag.CRAF)';
+                    var craftStore = JSON.parse(CRAFT);
+                            var pageStore;
+                            var craftId;
+
+                            function registerDrag() {
+                                $(".sidebar-nav-widget .lyrow").draggable({
+                                    connectToSortable: ".column",
+                                    cancel: ".selected",
+                                    helper: "clone",
+                                    handle: ".drag-widget",
+                                    zIndex:999,
+                                    drag: function (e, t) {
+                                        t.helper.width(400)
+                                    },
+                                    stop: function (e, t) {
+                                        $(".demo .column").sortable({
+                                            opacity: .35,
+                                            connectWith: ".column"
+                                        });
+                                        upateState();
+                                    }
+                                });
+
+                                $(".sidebar-nav-layout .lyrow").draggable({
+                                    connectToSortable: ".demo,.column",
+                                    cancel: ".selected",
+                                    helper: "clone",
+                                    handle: ".drag-widget",
+                                    zIndex: 999,
+                                    drag: function (e, t) {
+                                        t.helper.width(400)
+                                    },
+                                    stop: function (e, t) {
+                                        $(".demo .column").sortable({
+                                            opacity: .35,
+                                            connectWith: ".column"
+                                        });
+                                        upateState();
+                                    }
+                                });
+
+                                $(".demo .column").sortable({
+                                    opacity: .35,
+                                    connectWith: ".column"
+                                });
+                                $(".demo").sortable({
+                                    opacity: .35,
+                                    connectWith:".column"
+                                });
+
+                                $(".demo").delegate(".remove-widget", "click", function (e) {
+                                    e.preventDefault();
+                                    $(this).closest("[data-id]").remove();
+                                    if (!$(".demo .lyrow").length > 0) {
+                                        clearDemo()
+                                    }
+                                    if (typeof upateState == "function") {
+                                        upateState();
+                                    }
+                                })
+                            }
+
+                            $(".custom-input").on("change paste keyup", function() {
+                                var total = 0;
+                                var c = 0;
+                                var vl = $(this).val().split(" ").map(a=>parseInt(a));
+                                for(var i =0; i< vl.length;i++){
+                                    c+= vl[i];
+                                }
+                                if(c<=12){
+                                    var par = $(".custom-input").parent().parent().find(".view:hidden .row");
+                                    par.html("");
+                                    for(var i =0; i< vl.length; i++){
+                                        par.append(
+                                            $("<div class='col-md-"+ vl[i]+" column'></div>")
+                                        );
+                                    }
+                                }
+                                //$(".edittingBox > .box-header > i").attr('class',$(this).val());
+                            });
+
+
+                            //get Page information
+                            function loadPage(pageId) {
+                                $.ajax({
+                                    url: getURL('api/core/page?$filter=id eq ' + pageId),
+                                    method: "GET"
+                                }).done(function (data) {
+                                    pageStore = data;
+                                    if (pageStore.length > 0) {
+                                        var str = pageStore[0].container;
+
+                                        //str = str.replace(/{{==pagePost:([0-9]+)==}}/g, function (m,p1,off,stri) {
+                                        //    var craftid = p1;
+                                        //    var rp = $("[data-id=" + craftid + "]").html();
+                                        //    return rp;
+                                        //});
+                                        var getStr;
+                                        if(str)
+                                            if (str.includes("<!--")) {
+                                                str = str.replace(/<!--([^]+)-->/g, function (m, p1, off, stri) {
+                                                    getStr = p1;
+                                                    return p1;
+                                                });
+                                            }
+                                        $("#demo").html(getStr);
+                                        //upateState();
+                                        registerDrag();
+                                        upateState();
+                                    }
+                                    $('#beginLoad').remove();
+                                })
+                            }
+
+                            ////get all craft can draw on page
+                            //$.ajax({
+                            //    url: getURL('api/core/craftpage/'+pageId),
+                            //    method: "GET"
+                            //}).done(function (data) {
+                            //    craftStore = data;
+                            //    var _data = data;
+                            //    for (var i = 0; i < _data.length; i++) {
+                            //        var dt = _data[i];
+                            //        $("#estRowsW").append(createNode(dt));
+                            //    }
+                            //    //if (widget) {
+                            //    //    widget.beginUpdate();
+                            //    //    widget.option("dataSource", data);
+                            //    //    widget.endUpdate();
+                            //    //}
+
+                            //    //beginLoad
+
+                            //    $('#loading').remove();
+                            //    loadPage(pageId);
+
+                            //});
+                            var _data = craftStore;
+                            for (var i = 0; i < _data.length; i++) {
+                                        var dt = _data[i];
+                                        $("#estRowsW").append(createNode(dt));
+                            }                            
+
+                            //beginLoad
+
+                            $('#loading').remove();
+                            loadPage(pageId);
+
+                            function createNode(data) {
+                                var mas = $("<div class='lyrow' data-id='" + data.id + "'>");
+
+
+                                var pre = $("<div class='preview' style='margin:5px'>");
+                                //$("<div class='alert alert-info alert-dismissible' style='margin-bottom: 0px;padding: 5px;'>").append(
+                                //    $("<h4 class='drag-widget'>").append(
+                                //        $("<i class='icon fa fa-info'>"),
+                                //        data.title
+                                //    ),
+
+                                //).appendTo(pre);
+
+                                $("<i class='fa fa-th drag-widget' style='margin-left: 20px;'>").appendTo(pre);
+                                $("<span>").text(' '+data.title).appendTo(pre);
+
+                                var view = $("<div class='view'>");
+
+                                $("<div class='box box-solid box-default' data-build='" + data.id + "'>").append(
+                                    $("<div class='box-header with-border '>").append(
+                                        $("<h3 class='box-title'>").text(data.title),
+                                        $("<div class='box-tools pull-right'>").append(
+                                            $("<a href='#close' class='remove-widget label label-danger' data-widget='remove'>").append(
+                                                $("<i class='fa fa-times'>")
+                                            )
+                                        )
+                                    ),
+                                    $("<div class='box-body'>").append(
+                                        data.craft_name,
+                                    )
+                                ).appendTo(view);
+                                return mas.append(pre).append(view);
+                            }
+
+                            function getHtml() {
+                                downloadLayoutSrc();
+                                var t = $("#download-layout").children();
+                                t.find("[data-build]").each(function (i, el) {
+                                    var t = $(this).attr("data-build");
+                                    if (parseInt(t) > 0)
+                                        $(this).replaceWith("{{==pagePost:" + t + "==}}");
+                                    else {
+                                        var scr = $(this).html();
+                                        var st = $("<script>").html(scr);
+                                        $(this).replaceWith(st);
+                                    }
+                                        
+                                });
+                                var str = $("#download-layout").html();
+                                return str;
+                            }
+
+                            function upateState() {
+                                downloadLayoutSrc();
+                                $("[data-id]").removeClass("selected");
+                                var t = $("#download-layout").children();
+                                t.find("[data-build]").each(function (i, el) {
+                                    var t = $(this).attr("data-build");
+                                    $("[data-id=" + t + "]").addClass("selected");
+                                });
+                                $("[data-id]").click(function () {
+                                    var crId = $(this).attr("data-id");
+                                    if (parseInt(crId) > 0) {
+                                        craftId = crId;
+                                        loadAction(crId);
+                                    } else if (crId == "script") {
+                                        $(".edittingScript").removeClass("edittingScript");
+                                        $(this).addClass("edittingScript");
+                                        loadScript($(this));
+                                    }else if(crId =="box"){
+                                        $(".edittingBox").removeClass("edittingBox");
+                                        $(this).addClass("edittingBox");
+                                        loadBox($(this));
+                                    }
+
+                                   // actionSheet.option("target", this);
+                                   // actionSheet.option("visible", true);
+                                   // DevExpress.ui.notify(crId);
+                                });
+                            }
+
+                            function test() {
+                                alert(getHtml());
+                            }
+
+                            function savePage() {
+                                var str = getHtml();
+                                var editStr = $("#demo").html();
+                                editStr = "<!--" + editStr + "-->";
+
+                                $.ajax({
+                                    url: getURL('api/core/page/' + pageId),
+                                    method: "PUT",
+                                    data: { container: str + editStr}
+                                }).done(function () {
+                                    DevExpress.ui.notify("Saved", "success", 1000);
+                                    saveCraftPostion(str);
+                                })
+                            }
+                            function saveCraftPostion(str) {
+                                var li = [];
+                                str.replace(/{{==pagePost:([0-9]+)==}}/g, function (m,p1,off,stri) {
+                                    li.push(p1);
+
+                                });
+                                if (li.length > 0) {
+                                    $.ajax({
+                                        url: getURL('api/core/craftpage/' + pageId),
+                                        method: "PUT",
+                                        data: { Crafts: li.join(',') }
+                                    }).done(function () {
+
+                                    })
+                                }
+                            }
+
+
+                </script>
+            </li>
+
+        </ul>
+        <!-- /.sidebar-menu -->
+    </section>
+    <section id="config-page" style="display:none">
+        <div class="box box-warning">
+            <div class="box-header with-border">
+                <h3 class="box-title">Property</h3>
+
+                <div class="box-tools pull-right">
+                    <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                        <i class="fa fa-minus"></i>
+                    </button>
+                </div>
+                <!-- /.box-tools -->
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+                <table class="table table-bordered" id="Property">
+                    <tbody>
+                        <tr>
+                            <td colspan="2">
+                                <a class="btn btn-block btn-success" onclick="javascript:savePage();">
+                                    <i class="fa fa-save"></i> Save
+                                </a>
+                            </td>
+                        </tr>                        
+                    </tbody>
+                </table>
+                
+                
+            </div>
+            <!-- /.box-body -->
+        </div>
+        <!-- /.box -->
+        
+    </section>
+    <script>
+
+                
+            var actionStore;
+            var actionId = 0;
+            var actionTitle;
+            function loadScript(e) {
+                closeConfig();
+                clearNode();
+                var tmp = $("<tr class='add'>").append(
+                    $("<td>").text("Script"),
+                    $("<td>").append(
+                        $("<a class='btn btn-block btn-default btn-xs' onClick='javascript:showScript();'>").append(
+                            $("<i class='fa fa-edit'>")
+                        )
+                    )
+                );
+                addNode(tmp);
+                openConfig();
+            }
+
+            function loadBox(e) {
+                closeConfig();
+                clearNode();
+                var tmp;
+
+                tmp = $("<tr class='add'>").append(
+                    $("<th colspan='2'>").text("Headder"),                    
+                );
+                addNode(tmp);
+
+                tmp = $("<tr class='add'>").append(
+                    $("<td>").text("Style"),
+                    $("<td>").append(
+                        $("<select>").append(
+                            $("<option value='default'>").append($("<span class='label label-default pull-right'>").text("Default")),
+                            $("<option value='primary'>").append($("<span class='label label-primary pull-right'>").text("Primary")),
+                            $("<option value='success'>").append($("<span class='label label-success pull-right'>").text("Success")),
+                            $("<option value='warning'>").append($("<span class='label label-warning pull-right'>").text("Warning")),
+                            $("<option value='danger'>").append($("<span class='label label-danger pull-right'>").text("Danger")),  
+                            $("<option value='info'>").append($("<span class='label label-info pull-right'>").text("Info")),    
+                        
+                    
+                        ).change(function() {
+                            $(".edittingBox")
+                            .removeClass('box box-default')
+                            .removeClass('box box-primary')
+                            .removeClass('box box-success')
+                            .removeClass('box box-warning')
+                            .removeClass('box box-danger')
+                            .removeClass('box box-info')
+                            .addClass('box box-'+$(this).val());
+                        })
+                    )          
+                    
+                );
+                addNode(tmp);
+                var check = $(".edittingBox").hasClass("box-solid");
+                tmp = $("<tr class='add'>").append(
+                    $("<td>").text("Solid"),
+                    $("<td>").append(
+                        $("<input type='checkbox' " + (check?"checked":"") +">").change(function() {
+                            if($(this).is(':checked')){
+                                if(!$(".edittingBox").hasClass("box-solid"))
+                                    $(".edittingBox").addClass("box-solid");
+                            }else{
+                                if($(".edittingBox").hasClass("box-solid"))
+                                    $(".edittingBox").removeClass("box-solid");
+                            }
+                        })
+                    )
+                );
+                addNode(tmp);
+
+                tmp = $("<tr class='add'>").append(
+                    $("<td>").text("Title"),
+                    $("<td>").append(
+                        $("<input type='text' style='width:100%'>").val($(".edittingBox .box-title").first().text()).on("change paste keyup", function() {
+                            $(".edittingBox .box-title").first().text($(this).val());
+                        })
+                    )
+                );
+                addNode(tmp);
+
+                var val = $(".edittingBox > .box-header > i").attr('class');
+                tmp = $("<tr class='add'>").append(
+                    $("<td>").text("Icon"),
+                    $("<td>").append(
+                        $("<input type='text' style='width:100%'>").val(val).on("change paste keyup", function() {
+                            $(".edittingBox > .box-header > i").attr('class',$(this).val());
+                        })
+                    )
+                );
+                addNode(tmp);
+
+                check = $(".edittingBox > .box-header").hasClass("with-border");
+                tmp = $("<tr class='add'>").append(
+                    $("<td>").text("Head Border"),
+                    $("<td>").append(
+                        $("<input type='checkbox' " + (check?"checked":"") +">").change(function() {
+                            if($(this).is(':checked')){
+                                if(!$(".edittingBox > .box-header").hasClass("with-border"))
+                                    $(".edittingBox > .box-header").addClass("with-border");
+                            }else{
+                                if($(".edittingBox > .box-header").hasClass("with-border"))
+                                    $(".edittingBox > .box-header").removeClass("with-border");
+                            }
+                        })
+                    )
+                );
+                addNode(tmp);
+
+
+                check = $(".edittingBox").hasClass("collapsed-box");
+                tmp = $("<tr class='add'>").append(
+                    $("<td>").text("Collapsed"),
+                    $("<td>").append(
+                        $("<input type='checkbox' " + (check?"checked":"") +">").change(function() {
+                            if($(this).is(':checked')){
+                                if(!$(".edittingBox").hasClass("collapsed-box"))
+                                    $(".edittingBox").addClass("collapsed-box");
+                            }else{
+                                if($(".edittingBox").hasClass("collapsed-box"))
+                                    $(".edittingBox").removeClass("collapsed-box");
+                            }
+                        })
+                    )
+                );
+                addNode(tmp);
+
+                tmp = $("<tr class='add'>").append(
+                    $("<th colspan='2'>").text("Headder Button"),                    
+                );
+                addNode(tmp);
+                check = $(".edittingBox [data-widget='collapse']").is(":visible");
+                tmp = $("<tr class='add'>").append(
+                    $("<td>").text("Collapse"),
+                    $("<td>").append(
+                        $("<input type='checkbox'  " + (check?"checked":"") +">").change(function() {
+                            if($(this).is(':checked')){
+                                $(".edittingBox [data-widget='collapse']").show()
+                            }else{
+                                $(".edittingBox [data-widget='collapse']").hide()
+                            }
+                        })
+                    )
+                );
+                addNode(tmp);
+                check = $(".edittingBox button[data-widget='remove']").is(":visible");
+                tmp = $("<tr class='add'>").append(
+                    $("<td>").text("Remove"),
+                    $("<td>").append(
+                        $("<input type='checkbox'  " + (check?"checked":"") +">").change(function() {
+                            if($(this).is(':checked')){
+                                $(".edittingBox button[data-widget='remove']").show()
+                            }else{
+                                $(".edittingBox button[data-widget='remove']").hide()
+                            }
+                        })
+                    )
+                );
+                addNode(tmp);
+
+
+                openConfig();
+            }
+
+            function loadAction(craftId) {
+                return $.ajax({
+                    url: getURL('api/core/craftaction?$filter=craft_id eq ' + craftId),
+                    method: "GET"
+                }).done(function (data) {
+                    //actionStore = new DevExpress.data.ArrayStore({
+                    //    key: "id",
+                    //    data: data
+                    //});
+
+                    //actionSheet.option("dataSource", actionStore);
+                    closeConfig();
+                    clearNode();
+                    
+                    var hd = $("<tr class='add'>").append(
+                        $("<th colspan='2'>").text("Permission")
+                    );
+                    addNode(hd);
+                    for (var i = 0; i < data.length; i++) {
+                        var tmp = $("<tr class='add'>").append(
+                            $("<td>").text(data[i].title),
+                            $("<td>").append(
+                                $("<a class='btn btn-block btn-default btn-xs' onClick='javascript:showInfo("+data[i].id+");'>").append(
+                                    $("<i class='fa fa-edit'>")
+                                )
+                            )
+                        );
+                        addNode(tmp);
+                    }
+                    openConfig();
+
+                });
+
+            }
+
+            var actionSheet = $("#action-sheet").dxActionSheet({
+                dataSource: actionStore,
+                title: "Choose action",
+                usePopover: true,
+                onItemClick: function (value) {
+                    //DevExpress.ui.notify("The \"" + value.itemData.name + "\" button is clicked.");
+                    actionId = value.itemData.id;
+                    //actionRoleDataSource.load();
+                    actionTitle = value.itemData.title;
+                    showInfo();
+                }
+            }).dxActionSheet("instance");
+
+        
+
+        function clearNode() {
+            $("#Property .add").remove();
+        }
+        function addNode(node) {
+            $("#Property > tbody").append(node);
+        }
+
+        function openConfig() {
+            $("body").addClass("control-sidebar-open");
+            $("[href='#control-sidebar-settings-tab']").attr("aria-expanded","true");
+        }
+        function closeConfig() {
+            $("body").removeClass("control-sidebar-open");
+        }
+       
+        $(document).ready(function () {
+            //change home icon
+            var t = $("[href='#control-sidebar-home-tab'] .fa-home");
+            t.removeClass("fa-home").addClass("fa-server");
+
+            //change body side bar
+            
+
+            //replace containter
+
+            $("#control-sidebar-home-tab").html("");
+            //control-sidebar-settings-tab
+            $("#control-sidebar-settings-tab").html("");
+
+            var tool = $("#toobox-page").html();
+            $("#control-sidebar-home-tab").html(tool);
+            var conf = $("#config-page").html();
+            $("#control-sidebar-settings-tab").html(conf);
+
+        });
+    </script>
+    <div>
+        <div style="min-height: 754px;height:100%" class="demo ui-sortable" id="demo">
+
+        </div>
+        <div id="download-layout">
+            <div class="container">
+
+            </div>
+        </div>
+        <div id="action-sheet"></div>
+
+        <div id="popup">
+            <div class="popup"></div>
+        </div>
+        <div>
+            <pre id="editor" style="display:none;height:400px"></pre>
+        </div>
+        <script>
+            var actionRoleStore;
+            var roleId;
+            var actionUserStore;
+            var userId;
+
+            var userStore;
+            var roleStore;
+
+            //load all user
+            $.ajax({
+                url: getURL('api/core/user'),
+                method: "GET"
+            }).done(function (data) {
+                userStore = data;
+                if (userId) {
+
+                    userId.dxDataGrid("instance").beginUpdate();
+                    userId.dxDataGrid("instance").columnOption('user_id', 'lookup.dataSource', userStore);
+                    userId.dxDataGrid("instance").endUpdate();
+                }
+            });
+
+
+            //load all role
+            $.ajax({
+                url: getURL('api/core/role'),
+                method: "GET"
+            }).done(function (data) {
+                roleStore = data;
+                if (roleId) {
+                    if (roleId) {
+                        roleId.dxDataGrid("instance").beginUpdate();
+                        roleId.dxDataGrid("instance").columnOption('role_id', 'lookup.dataSource', roleStore);
+                        roleId.dxDataGrid("instance").endUpdate();
+                    }
+                }
+            });
+
+            function getActionRole() {
+                return $.ajax({
+                    url: getURL('api/core/craftpageactionrole?$filter=craft_action_callback_id eq ' + actionId + ' and page_id eq ' + pageId),
+                    method: "GET",
+                    data: { pageId: pageId, actionId: actionId }
+                }).done(function (data) {
+                    actionRoleStore = data;
+
+                });
+
+
+            }
+
+            var actionRoleDataSource = new DevExpress.data.CustomStore({
+                key: 'id',
+                load: function (loadOptions) {
+                    return $.getJSON(getURL('api/core/craftpageactionrole?$filter=craft_action_callback_id eq ' + actionId + ' and page_id eq ' + pageId));
+                },
+
+                byKey: function (key) {
+                    return $.getJSON(getURL('api/core/craftpageactionrole' + "/" + encodeURIComponent(key)));
+                },
+
+                insert: function (values) {
+                    return $.post(getURL('api/core/craftpageactionrole'), values);
+                },
+
+                update: function (key, values) {
+                    return $.ajax({
+                        url: getURL('api/core/craftpageactionrole' + "/" + encodeURIComponent(key)),
+                        method: "PUT",
+                        data: values
+                    });
+                },
+
+                remove: function (key) {
+                    return $.ajax({
+                        url: getURL('api/core/craftpageactionrole' + "/" + encodeURIComponent(key)),
+                        method: "DELETE",
+                    });
+                }
+            });
+
+            var AUD = new NCStore({
+                url: 'api/core/craftpageactionuser',
+                filter: ['craft_action_callback_id=' + actionId, 'page_id=' + pageId],
+                key: "id"
+            });
+            var actionUserDataSource = new DevExpress.data.CustomStore({
+                key: 'id',
+                load: function (loadOptions) {
+                    return $.getJSON(getURL('api/core/craftpageactionuser?$filter=craft_action_callback_id eq ' + actionId + ' and page_id eq ' + pageId));
+                },
+
+                byKey: function (key) {
+                    return $.getJSON(getURL('api/core/craftpageactionuser' + "/" + encodeURIComponent(key)));
+                },
+
+                insert: function (values) {
+                    return $.post(getURL('api/core/craftpageactionuser'), values);
+                },
+
+                update: function (key, values) {
+                    return $.ajax({
+                        url: getURL('api/core/craftpageactionuser' + "/" + encodeURIComponent(key)),
+                        method: "PUT",
+                        data: values
+                    });
+                },
+
+                remove: function (key) {
+                    return $.ajax({
+                        url: getURL('api/core/craftpageactionuser' + "/" + encodeURIComponent(key)),
+                        method: "DELETE",
+                    });
+                }
+            });
+
+            var syncTreeViewSelection = function (treeView, value) {
+                if (!value) {
+                    treeView.unselectAll();
+                } else {
+                    treeView.selectItem(value);
+                }
+            };
+
+            var formId = $("<div>").dxForm({
+                formData: [],
+                colCount: 1,
+                items: [{
+                    itemType: "tabbed",
+                    tabPanelOptions: {
+                        deferRendering: false
+                    },
+                    tabs: [{
+                        title: "Roles",
+                        items: [{
+                            dataField: "Roles",
+                            label: {
+                                visible: false
+                            },
+                            template: function (data, itemElement) {
+                                var div = document.createElement("div");
+                                itemElement.append(div);
+                                roleId = $(div).dxDataGrid({
+                                    dataSource: { store: actionRoleDataSource },
+
+                                    onInitNewRow: function (e) {
+                                        e.data.page_id = pageId;
+                                        e.data.craft_action_callback_id = actionId;
+                                        e.data.deny = true;
+                                        e.data.allow = false;
+                                    },
+                                    columnAutoWidth: true,
+                                    showBorders: true,
+                                    showRowLines: true,
+                                    wordWrapEnabled: true,
+                                    searchPanel: {
+                                        visible: true,
+
+                                    },
+                                    editing: {
+                                        mode: "cell",
+                                        allowUpdating: true,
+                                        allowDeleting: true,
+                                        allowAdding: true
+                                    },
+                                    headerFilter: {
+                                        visible: true
+                                    },
+                                    columns: [
+                                        {
+                                            dataField: "role_id",
+                                            caption: "Role",
+                                            lookup: {
+                                                dataSource: roleStore,
+                                                valueExpr: "id",
+                                                displayExpr: "role_name"
+                                            },
+                                            editCellTemplate: function (cellElement, cellInfo) {
+                                                var div = document.createElement("div");
+                                                cellElement.get(0).appendChild(div);
+                                                $(div).dxDropDownBox({
+                                                    value: cellInfo.value,
+                                                    valueExpr: "id",
+                                                    displayExpr: "role_name",
+                                                    dataSource: roleStore,
+                                                    contentTemplate: function (e) {
+                                                        var value = e.component.option("value"),
+                                                            $treeView = $("<div>").dxTreeView({
+                                                                dataSource: e.component.option("dataSource"),
+                                                                dataStructure: "plain",
+                                                                keyExpr: "id",
+                                                                parentIdExpr: "parent_id",
+                                                                selectionMode: "single",
+                                                                displayExpr: "role_name",
+                                                                selectByClick: true,
+                                                                onContentReady: function (args) {
+                                                                    syncTreeViewSelection(args.component, value);
+                                                                },
+                                                                selectNodesRecursive: false,
+                                                                onItemSelectionChanged: function (args) {
+                                                                    var value = args.component.getSelectedNodesKeys();
+                                                                    e.component.option("value", value);
+                                                                    if (value.length > 0)
+                                                                        cellInfo.setValue(value[0]);
+                                                                }
+                                                            });
+
+                                                        treeView = $treeView.dxTreeView("instance");
+
+                                                        e.component.on("valueChanged", function (args) {
+                                                            syncTreeViewSelection(treeView, args.value);
+                                                            if (args.value.length > 0)
+                                                                cellInfo.setValue(args.value[0]);
+                                                        });
+
+                                                        return $treeView;
+                                                    }
+                                                });
+
+
+                                            }
+                                        },
+                                        {
+                                            dataField: "allow",
+                                            dataType: "boolean",
+                                            setCellValue: function (newData, value, currentRowData) {
+                                                newData.allow = value;
+                                                if (value && currentRowData.deny) {
+                                                    newData.deny = false;
+                                                }
+                                            }
+                                        },
+                                        {
+                                            dataField: "deny",
+                                            dataType: "boolean",
+                                            setCellValue: function (newData, value, currentRowData) {
+                                                newData.deny = value;
+                                                if (value && currentRowData.allow) {
+                                                    newData.allow = false;
+                                                }
+                                            }
+                                        }
+                                    ],
+                                })
+
+                            }
+                        }]
+                    }, {
+                        title: "Users",
+                        items: [{
+                            dataField: "Users",
+                            label: {
+                                visible: false
+                            },
+                            template: function (data, itemElement) {
+                                var div = document.createElement("div");
+                                itemElement.append(div);
+                                userId = $(div).dxDataGrid({
+                                    dataSource: AUD.Store(),
+                                    onInitNewRow: function (e) {
+                                        e.data.page_id = pageId;
+                                        e.data.craft_action_callback_id = actionId;
+                                        e.data.deny = true;
+                                        e.data.allow = false;
+                                    },
+                                    columnAutoWidth: true,
+                                    showBorders: true,
+                                    showRowLines: true,
+                                    wordWrapEnabled: true,
+                                    searchPanel: {
+                                        visible: true,
+
+                                    },
+                                    editing: {
+                                        mode: "cell",
+                                        allowUpdating: true,
+                                        allowDeleting: true,
+                                        allowAdding: true
+                                    },
+                                    headerFilter: {
+                                        visible: true
+                                    },
+                                    columns: [
+                                        {
+                                            dataField: "user_id",
+                                            caption: "User",
+                                            lookup: {
+                                                dataSource: userStore,
+                                                valueExpr: "id",
+                                                displayExpr: "username"
+                                            }
+
+                                        },
+                                        {
+                                            dataField: "allow",
+                                            dataType: "boolean",
+                                            setCellValue: function (newData, value, currentRowData) {
+                                                newData.allow = value;
+                                                if (value && currentRowData.deny) {
+                                                    newData.deny = false;
+                                                }
+                                            }
+                                        },
+                                        {
+                                            dataField: "deny",
+                                            dataType: "boolean",
+                                            setCellValue: function (newData, value, currentRowData) {
+                                                newData.deny = value;
+                                                if (value && currentRowData.allow) {
+                                                    newData.allow = false;
+                                                }
+                                            }
+                                        }
+                                    ],
+                                })
+                            }
+                        }]
+                    }]
+                }]
+
+            });
+            var scriptId = $("#editor");
+            var popup = null;
+            var scriptup = null;
+            var popupOptions = {
+                contentTemplate: function () {
+                    return $("<div>").append(formId);
+                },
+                showTitle: true,
+                title: "Craft Action",
+                visible: false,
+                dragEnabled: true,
+                closeOnOutsideClick: true
+            };
+            var scriptupOptions = {
+                contentTemplate: function () {
+                    return $("<div>").append(scriptId);
+                },
+                showTitle: true,
+                title: "Edit script",
+                visible: false,
+                dragEnabled: true,
+                closeOnOutsideClick: false,
+                toolbarItems: [{
+                    toolbar: "bottom",
+                    widget: "dxButton",
+                        options: {
+                            icon: 'save',
+                            text: "Ok",                            
+                            onClick: function () {
+                                $(".edittingScript > .script").html(editor.getValue());                                
+                                scriptup.hide();
+                            }
+                        },
+                    
+                }],
+            };
+            var $popupContainer = $("<div />")
+                .addClass("popup")
+                .appendTo($("#popup"));
+            var $popScriptContainer = $("<div>").addClass("popScript").appendTo($("#popup"));
+            var popup = $popupContainer.dxPopup(popupOptions).dxPopup("instance");
+            var scriptup = $popScriptContainer.dxPopup(scriptupOptions).dxPopup("instance");
+            var showInfo = function (id) {
+                actionId = id;
+                //if (popup) {
+                //    $(".popup").remove();
+                //}
+                //var $popupContainer = $("<div />")
+                //    .addClass("popup")
+                //    .appendTo($("#popup"));
+                //popup = $popupContainer.dxPopup(popupOptions).dxPopup("instance");
+                if (roleId)
+                    roleId.dxDataGrid("instance").refresh();
+                if (userId)
+                    userId.dxDataGrid("instance").refresh();
+                popup.option("title", actionTitle)
+                popup.show();
+            };
+            var showScript = function (e) {    
+                $("#editor").show();
+                editor.setValue($(".edittingScript > .script").html());
+                scriptup.show();
+            }
+
+            function saveLayout() {
+                return;
+            }
+
+        </script>
+
+
+        <script>
+            // set to false to prevent using worker, which is needed to run this from local html file due to browser security restritions
+            var useWebWorker = window.location.search.toLowerCase().indexOf('noworker') == -1;
+
+
+            //create editor
+            var editor = ace.edit("editor");
+            editor.getSession().setUseWorker(useWebWorker);
+
+            setModeFromHash(); //set editor content for demo only
+
+            //#region not relevant to tern, just some deafults I prefer
+            editor.setTheme("ace/theme/chrome");
+            editor.getSession().setUseWrapMode(true);
+            editor.getSession().setWrapLimitRange(null, null);
+            editor.setShowPrintMargin(false);
+            editor.$blockScrolling = Infinity;//prevents ace from logging annoying warnings
+            //#endregion
+
+            ace.config.loadModule('ace/ext/tern', function () {
+                editor.setOptions({
+                    /**
+                     * Either `true` or `false` or to enable with custom options pass object that
+                     * has options for tern server: http://ternjs.net/doc/manual.html#server_api
+                     * If `true`, then default options will be used
+                     */
+                    enableTern: {
+                        /* http://ternjs.net/doc/manual.html#option_defs */
+                        defs: ['ncwidget', 'events'],
+                        /* http://ternjs.net/doc/manual.html#plugins */
+                        plugins: {
+                            doc_comment: {
+                                fullDocs: true
+                            }
+                        },
+                        /**
+                         * (default is true) If web worker is used for tern server.
+                         * This is recommended as it offers better performance, but prevents this from working in a local html file due to browser security restrictions
+                         */
+                        useWorker: false,
+                        /* if your editor supports switching between different files (such as tabbed interface) then tern can do this when jump to defnition of function in another file is called, but you must tell tern what to execute in order to jump to the specified file */
+                        switchToDoc: function (name, start) {
+                            console.log('switchToDoc called but not defined. name=' + name + '; start=', start);
+                        },
+                        /**
+                         * if passed, this function will be called once ternServer is started.
+                         * This is needed when useWorker=false because the tern source files are loaded asynchronously before the server is started.
+                         */
+                        startedCb: function () {
+                            //once tern is enabled, it can be accessed via editor.ternServer
+                            console.log('editor.ternServer:', editor.ternServer);
+                        },
+                    },
+                    /**
+                     * when using tern, it takes over Ace's built in snippets support.
+                     * this setting affects all modes when using tern, not just javascript.
+                     */
+                    enableSnippets: true,
+                    /**
+                     * when using tern, Ace's basic text auto completion is enabled still by deafult.
+                     * This settings affects all modes when using tern, not just javascript.
+                     * For javascript mode the basic auto completion will be added to completion results if tern fails to find completions or if you double tab the hotkey for get completion (default is ctrl+space, so hit ctrl+space twice rapidly to include basic text completions in the result)
+                     */
+                    enableBasicAutocompletion: true,
+                });
+            });
+
+            //#region not relevant to tern (custom beautify plugin) and demo loading
+            ace.config.loadModule('ace/ext/html_beautify', function (beautify) {
+                editor.setOptions({
+                    // beautify when closing bracket typed in javascript or css mode
+                    autoBeautify: true,
+                    // this enables the plugin to work with hotkeys (ctrl+b to beautify)
+                    htmlBeautify: true,
+                });
+
+                //modify beautify options as needed:
+                window.beautifyOptions = beautify.options;
+                console.log('beautifyOptions:', beautifyOptions);
+            });
+
+            function GetFile(file, c) {
+                var xhr = new XMLHttpRequest();
+                xhr.open("get", file, true);
+                xhr.send();
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState == 4) c(xhr.responseText, xhr.status);
+                };
+            }
+
+            var langTools = ace.require("ace/ext/language_tools");
+
+            function setModeFromHash() {
+
+
+                editor.session.setMode("ace/mode/javascript");
+
+                editor.setValue("");
+
+
+            }
+                //#endregion
+        </script>
+    </div>
+
+
+
+</body>
+</html>

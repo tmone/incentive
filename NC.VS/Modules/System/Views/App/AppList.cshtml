@@ -1,0 +1,55 @@
+﻿@inherits System.Web.Mvc.WebViewPage
+@{
+    Layout = "~/Layout/LAdmin.cshtml";
+}
+<div id="application_grid">
+
+</div>
+<script>
+    $(function () {
+        $("#application_grid").dxDataGrid({
+            dataSource: getURL('api/core/app'),
+            columns: [{ dataField: 'id', width: 50 }, { dataField: 'app_name', width: 200 }, "description", { dataField: '_createdate', caption: 'Create Date' },
+                    {
+                        dataField: 'id', width: 100, caption: 'Status', cellTemplate: function (container, options) {
+                            //console.log(options.row.data.app_name);
+                            if (options.value == 0) {
+                                $("<div>")
+                                $('<a/>').addClass('btn btn-block btn-success')
+                                    .text('Install')
+                                    .attr('id', 'grid_row_' + options.row.data.app_name)
+                                    .on('dxclick', function () {
+                                        //Do something with options.data;
+                                        //alert(options.value);
+                                        var datapost = { app_name: options.row.data.app_name };
+                                        $.ajax({
+                                            url: getURL('api/core/app'),
+                                            method: "POST",
+                                            data: datapost,
+                                        }).done(function (e) {
+                                            //Install success
+                                            if (e[0].status == 0) {
+                                                //
+                                                $('#' + 'grid_row_' + options.row.data.app_name).removeClass('btn btn-block btn-success');
+                                                $('#' + 'grid_row_' + options.row.data.app_name).text('UnInstall');
+                                                $('#' + 'grid_row_' + options.row.data.app_name).addClass('btn btn-block btn-danger')
+                                            } else {
+                                                alert(e[0].msg);
+                                                //
+                                            }
+                                        })
+                                    })
+                                    .appendTo(container);
+                            } else {
+                                $("<div>")
+                                $('<a/>').addClass('btn btn-block btn-danger')
+                                    .text('UnInstall')
+                                    .on('dxclick', function () {
+                                        alert(options.value);
+                                    })
+                                    .appendTo(container);
+                            }
+                    } }]
+        });
+    });
+</script>

@@ -1,0 +1,1144 @@
+﻿@inherits System.Web.Mvc.WebViewPage
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Page Builder</title>
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <link rel="stylesheet" href="@Url.Content("~/Resource/lib/AdminLTE-2.4.2/bower_components/bootstrap/dist/css/bootstrap.min.css")">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="@Url.Content("~/Resource/lib/AdminLTE-2.4.2/bower_components/font-awesome/css/font-awesome.min.css")">
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="@Url.Content("~/Resource/lib/AdminLTE-2.4.2/bower_components/Ionicons/css/ionicons.min.css")">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="@Url.Content("~/Resource/lib/AdminLTE-2.4.2/dist/css/AdminLTE.min.css")">
+    <!-- AdminLTE Skins. We have chosen the skin-blue for this starter
+          page. However, you can choose any other skin. Make sure you
+          apply the skin class to the body tag so the changes take effect. -->
+    <link rel="stylesheet" href="@Url.Content("~/Resource/lib/AdminLTE-2.4.2/dist/css/skins/_all-skins.min.css")">
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <!-- Google Font -->
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+    <!-- DEVEXTREME Include-->
+    <link rel="stylesheet" href="@Url.Content("~/Resource/lib/DevExtreme/css/dx.common.css")">
+    <link rel="dx-theme" data-theme="generic.light" href="@Url.Content("~/Resource/lib/DevExtreme/css/dx.light.css")" />
+    <link rel="stylesheet" href="@Url.Content("~/Resource/css/Site.css")">
+    <link rel="stylesheet" href="@Url.Content("~/Resource/lib/Flag/flag.css")">
+
+
+    <!-- REQUIRED JS SCRIPTS -->
+    <!-- jQuery 3 -->
+    <script src="@Url.Content("~/Resource/scripts/jquery-3.1.0.min.js")"></script>
+
+    <script src="@Url.Content("~/Resource/scripts/core/NC.js")"></script>
+    <!-- Bootstrap 3.3.7 -->
+    <script src="@Url.Content("~/Resource/lib/AdminLTE-2.4.2/bower_components/bootstrap/dist/js/bootstrap.min.js")"></script>
+    <!-- AdminLTE App -->
+    <script src="@Url.Content("~/Resource/lib/AdminLTE-2.4.2/dist/js/adminlte.min.js")"></script>
+    <!-- Optionally, you can add Slimscroll and FastClick plugins.
+         Both of these plugins are recommended to enhance the
+         user experience. -->
+    <!-- DevExtreme include -->
+
+    <script src="@Url.Content("~/Resource/lib/DevExtreme/js/dx.all.debug.js")"></script>
+
+    <!-- Layout It-->
+    <link href="@Url.Content("~/Resource/lib/LayoutIt/css/layoutit.css")" rel="stylesheet">
+    <script src="@Url.Content("~/Resource/lib/LayoutIt/js/jquery-ui.js")"></script>
+    <script src="@Url.Content("~/Resource/lib/LayoutIt/js/jquery.htmlClean.js")"></script>
+    <script src="@Url.Content("~/Resource/lib/LayoutIt/js/scripts.js")"></script>
+    <script src="@Url.Content("~/Resource/scripts/core/NCStore.js")"></script>
+    <style>
+        .selected  h4{
+            cursor: no-drop
+        }
+        .drag-widget{
+            cursor: move
+        }
+        .selected .view{
+            cursor:move
+        }
+    </style>
+
+</head>
+<body style="min-height: 824px;" class="hold-transition skin-blue-light sidebar-mini edit">
+    <input type="hidden" id="token" value="{{#TOKEN#}}" />
+    <input type="hidden" id="base_url" value="http://localhost:8080/" />
+    <div class="wrapper">
+        <header class="main-header">
+            <!-- Logo -->
+            <a href="#" class="logo">
+                <!-- mini logo for sidebar mini 50x50 pixels -->
+                <span class="logo-mini"><b>KEVN</b></span>
+                <!-- logo for regular state and mobile devices -->
+                <span class="logo-lg"><b>KEVN</b> Admin Portal</span>
+            </a>
+            <!-- Header Navbar -->
+            <nav class="navbar navbar-static-top" role="navigation">
+                <!-- Sidebar toggle button-->
+                <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
+                    <span class="sr-only">Toggle navigation</span>
+                </a>
+                <!-- Navbar Right Menu -->
+                <div class="navbar-custom-menu">
+                    <ul class="nav navbar-nav">
+                        <!-- Messages: style can be found in dropdown.less-->
+                        <li class="dropdown messages-menu">
+                            <!-- Menu toggle button -->
+                            <a href="#" onclick="javascript:savePage();">
+                                <i class="fa fa-save"></i>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li class="header">You have 4 messages</li>
+                                <li>
+                                    <!-- inner menu: contains the messages -->
+                                    <ul class="menu">
+                                        <li>
+                                            <!-- start message -->
+                                            <a href="#">
+                                                <div class="pull-left">
+                                                    <!-- User Image -->
+                                                    <img src="~/Resource/images/Profiles/default.png" class="img-circle" alt="User Image">
+                                                </div>
+                                                <!-- Message title and timestamp -->
+                                                <h4>
+                                                    Support Team
+                                                    <small><i class="fa fa-clock-o"></i> 5 mins</small>
+                                                </h4>
+                                                <!-- The message -->
+                                                <p>Why not buy a new awesome theme?</p>
+                                            </a>
+                                        </li>
+                                        <!-- end message -->
+                                    </ul>
+                                    <!-- /.menu -->
+                                </li>
+                                <li class="footer"><a href="#">See All Messages</a></li>
+                            </ul>
+                        </li>
+                        <!-- /.messages-menu -->
+                        <!-- Notifications Menu -->
+                        <li class="dropdown notifications-menu">
+                            <!-- Menu toggle button -->
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                <i class="fa fa-bell-o"></i>
+                                <span class="label label-warning">10</span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li class="header">You have 10 notifications</li>
+                                <li>
+                                    <!-- Inner Menu: contains the notifications -->
+                                    <ul class="menu">
+                                        <li>
+                                            <!-- start notification -->
+                                            <a href="#">
+                                                <i class="fa fa-users text-aqua"></i> 5 new members joined today
+                                            </a>
+                                        </li>
+                                        <!-- end notification -->
+                                    </ul>
+                                </li>
+                                <li class="footer"><a href="#">View all</a></li>
+                            </ul>
+                        </li>
+                        <!-- Tasks Menu -->
+                        <li class="dropdown tasks-menu">
+                            <!-- Menu Toggle Button -->
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                <i class="fa fa-flag-o"></i>
+                                <span class="label label-danger">9</span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li class="header">You have 9 tasks</li>
+                                <li>
+                                    <!-- Inner menu: contains the tasks -->
+                                    <ul class="menu">
+                                        <li>
+                                            <!-- Task item -->
+                                            <a href="#">
+                                                <!-- Task title and progress text -->
+                                                <h3>
+                                                    Design some buttons
+                                                    <small class="pull-right">20%</small>
+                                                </h3>
+                                                <!-- The progress bar -->
+                                                <div class="progress xs">
+                                                    <!-- Change the css width attribute to simulate progress -->
+                                                    <div class="progress-bar progress-bar-aqua" style="width: 20%" role="progressbar"
+                                                         aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">
+                                                        <span class="sr-only">20% Complete</span>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        </li>
+                                        <!-- end task item -->
+                                    </ul>
+                                </li>
+                                <li class="footer">
+                                    <a href="#">View all tasks</a>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <!-- Control Sidebar Toggle Button -->
+                        <li>
+                            <a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </header>
+
+        <aside class="main-sidebar">
+            <!-- sidebar: style can be found in sidebar.less -->
+            <section class="sidebar">
+                <!-- Sidebar Menu -->
+                <ul class="sidebar-menu" data-widget="tree">
+                    <li class="active treeview menu-open">
+                        <a href="#">
+                            <div class="pull-right popover-info">
+                                <i class="glyphicon glyphicon-question-sign"></i>
+                                <div class="popover fade right">
+                                    <div class="arrow"></div>
+                                    <h3 class="popover-title">help</h3>
+                                    <div class="popover-content">
+                                        Set your grid layout here, each grid has 12 columns, divided by space
+                                    </div>
+                                </div>
+                            </div>
+                            <i class="fa fa-object-group"></i> <span>Layout</span>
+                        </a>
+
+                        <div class="sidebar-nav">
+                            <ul class="nav nav-list accordion-group">
+                                <li class="rows" id="estRows">
+                                    <div class="lyrow ui-draggable">
+                                        <span class="drag label label-default">
+                                            <i class="glyphicon glyphicon-move"></i>
+                                            drag
+                                        </span>
+                                        <a href="#close" class="remove label label-danger">
+                                            <i class="glyphicon-remove glyphicon"></i>
+                                            delete
+                                        </a>
+
+                                        <div class="preview">
+                                            <i class="drag fa fa-th" style="margin-left:20px"></i> <span>1 Column</span>
+                                            <span class="pull-right-container">
+                                                <small class="label pull-right bg-blue" style="height:17px;margin-right: 55px;margin-top: 5px;width: 60px;">12</small>
+                                            </span>
+                                            <input value="12" class="form-control" type="text" style="display:none">
+                                        </div>
+                                        <div class="view">
+                                            <div class="row clearfix">
+                                                <div class="col-md-12 column"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="lyrow ui-draggable">
+                                        <a href="#close" class="remove label label-danger">
+                                            <i class="glyphicon-remove glyphicon"></i>
+                                            delete
+                                        </a>
+                                        <span class="drag label label-default">
+                                            <i class="glyphicon glyphicon-move"></i>
+                                            drag
+                                        </span>
+                                        <div class="preview">
+                                            <i class="fa fa-th" style="margin-left:20px"></i> <span>2 Column</span>
+                                            <span class="pull-right-container">
+                                                <small class="label pull-right bg-blue" style="height:17px;margin-right: 55px;margin-top: 5px;width: 30px;">6</small>
+                                                <small class="label pull-right bg-blue" style="height:17px;margin-right: 1px;margin-top: 5px;width: 30px;">6</small>
+                                            </span>
+                                            <input value="6 6" class="form-control" type="text" style="display:none">
+                                        </div>
+                                        <div class="view">
+                                            <div class="row clearfix">
+                                                <div class="col-md-6 column"></div>
+                                                <div class="col-md-6 column"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="lyrow ui-draggable">
+                                        <a href="#close" class="remove label label-danger">
+                                            <i class="glyphicon-remove glyphicon"></i>
+                                            delete
+                                        </a>
+                                        <span class="drag label label-default">
+                                            <i class="glyphicon glyphicon-move"></i>
+                                            drag
+                                        </span>
+                                        <div class="preview">
+                                            <i class="fa fa-th" style="margin-left:20px"></i> <span>2 Column</span>
+                                            <span class="pull-right-container">
+                                                <small class="label pull-right bg-blue" style="height:17px;margin-right: 55px;margin-top: 5px;width: 20px;">4</small>
+                                                <small class="label pull-right bg-blue" style="height:17px;margin-right: 1px;margin-top: 5px;width: 40px;">8</small>
+                                            </span>
+                                            <input value="8 4" class="form-control" type="text" style="display:none">
+                                        </div>
+                                        <div class="view">
+                                            <div class="row clearfix">
+                                                <div class="col-md-8 column"></div>
+                                                <div class="col-md-4 column"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="lyrow ui-draggable">
+                                        <a href="#close" class="remove label label-danger">
+                                            <i class="glyphicon-remove glyphicon"></i>
+                                            delete
+                                        </a>
+                                        <span class="drag label label-default">
+                                            <i class="glyphicon glyphicon-move"></i>
+                                            drag
+                                        </span>
+                                        <div class="preview">
+                                            <i class="fa fa-th" style="margin-left:20px"></i> <span>3 Column</span>
+                                            <span class="pull-right-container">
+                                                <small class="label pull-right bg-blue" style="height:17px;margin-right: 55px;margin-top: 5px;width: 20px;">4</small>
+                                                <small class="label pull-right bg-blue" style="height:17px;margin-right: 1px;margin-top: 5px;width: 20px;">4</small>
+                                                <small class="label pull-right bg-blue" style="height:17px;margin-right: 1px;margin-top: 5px;width: 20px;">4</small>
+                                            </span>
+
+                                            <input value="4 4 4" class="form-control" type="text" style="display:none">
+                                        </div>
+                                        <div class="view">
+                                            <div class="row clearfix">
+                                                <div class="col-md-4 column"></div>
+                                                <div class="col-md-4 column"></div>
+                                                <div class="col-md-4 column"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="lyrow ui-draggable">
+                                        <a href="#close" class="remove label label-danger">
+                                            <i class="glyphicon-remove glyphicon"></i>
+                                            delete
+                                        </a>
+                                        <span class="drag label label-default">
+                                            <i class="glyphicon glyphicon-move"></i>
+                                            drag
+                                        </span>
+                                        <div class="preview">
+                                            <i class="fa fa-th" style="margin-left:20px"></i> <span>3 Column</span>
+                                            <span class="pull-right-container">
+                                                <small class="label pull-right bg-blue" style="height:17px;margin-right: 55px;margin-top: 5px;width: 30px;">6</small>
+                                                <small class="label pull-right bg-blue" style="height:17px;margin-right: 1px;margin-top: 5px;width: 20px;">4</small>
+                                                <small class="label pull-right bg-blue" style="height:17px;margin-right: 1px;margin-top: 5px;width: 10px;">2</small>
+                                            </span>
+                                            <input value="2 6 4" class="form-control" type="text" style="display:none">
+                                        </div>
+                                        <div class="view">
+                                            <div class="row clearfix">
+                                                <div class="col-md-2 column"></div>
+                                                <div class="col-md-6 column"></div>
+                                                <div class="col-md-4 column"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+
+
+
+                    <li class="active treeview menu-open">
+                        <a href="#">
+                            <i class="fa fa-th"></i> <span>Widgets</span>
+                            <span class="pull-right-container">
+                                <i class="fa fa-angle-left pull-right"></i>
+                            </span>
+                            <div class="overlay" id="loading">
+                                <i class="fa fa-refresh fa-spin"></i>
+                            </div>
+                        </a>
+
+                        <div class="sidebar-nav-widget">
+                            <ul class="nav nav-list accordion-group">
+                                <li class="rows" id="estRowsW">
+
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div id="widget"></div>
+                        <script>
+                            var pageId = '@Html.Raw(ViewBag.ID)';
+                            var craftStore;
+                            var pageStore;
+                            var craftId;
+
+                            function registerDrag() {
+                                $(".sidebar-nav-widget .lyrow").draggable({
+                                    connectToSortable: ".column",
+                                    cancel: ".selected",
+                                    helper: "clone",
+                                    handle: ".drag-widget",
+                                    zIndex:999,
+                                    drag: function (e, t) {
+                                        t.helper.width(400)
+                                    },
+                                    stop: function (e, t) {
+                                        $(".demo .column").sortable({
+                                            opacity: .35,
+                                            connectWith: ".column"
+                                        });
+                                        upateState();
+                                    }
+                                });
+                                $(".demo .column").sortable({
+                                    opacity: .35,
+                                    connectWith: ".column"
+                                });
+                            }
+
+                            
+
+                            //get Page information
+                            function loadPage(pageId) {
+                                $.ajax({
+                                    url: getURL('api/core/page?$filter=id eq ' + pageId),
+                                    method: "GET"
+                                }).done(function (data) {
+                                    pageStore = data;
+                                    if (pageStore.length > 0) {
+                                        var str = pageStore[0].container;
+
+                                        //str = str.replace(/{{==pagePost:([0-9]+)==}}/g, function (m,p1,off,stri) {
+                                        //    var craftid = p1;
+                                        //    var rp = $("[data-id=" + craftid + "]").html();
+                                        //    return rp;
+                                        //});
+                                        var getStr;
+                                        if(str)
+                                            if (str.includes("<!--")) {
+                                                str = str.replace(/<!--([^]+)-->/g, function (m, p1, off, stri) {
+                                                    getStr = p1;
+                                                    return p1;
+                                                });
+                                            }
+                                        $("#demo").html(getStr);
+                                        //upateState();
+                                        registerDrag();
+                                        upateState();
+                                    }
+                                })
+                            }
+
+                            //get all craft can draw on page
+                            $.ajax({
+                                url: getURL('api/core/craftpage/'+pageId),
+                                method: "GET"
+                            }).done(function (data) {
+                                craftStore = data;
+                                var _data = data;
+                                for (var i = 0; i < _data.length; i++) {
+                                    var dt = _data[i];
+                                    $("#estRowsW").append(createNode(dt));
+                                }
+                                //if (widget) {
+                                //    widget.beginUpdate();
+                                //    widget.option("dataSource", data);
+                                //    widget.endUpdate();
+                                //}
+
+
+                                $('#loading').remove();
+                                loadPage(pageId);
+
+                            });
+
+                            function createNode(data) {
+                                var mas = $("<div class='lyrow ui-draggable' data-id='" + data.id + "'>");
+
+                                //$(mas).click(function () {
+                                //    var crId = $(mas).attr("data-id");
+                                //    craftId = crId;
+                                //    loadAction(crId);
+                                //    DevExpress.ui.notify(crId);
+                                //});
+                                
+                                $("<a href='#close' class='remove label label-danger'>").append(
+                                    $("<i class='glyphicon-remove glyphicon'>"),
+                                    "delete"
+                                ).appendTo(mas);
+                                var pre = $("<div class='preview' style='margin:5px'>");
+                                $("<div class='alert alert-info alert-dismissible' style='margin-bottom: 0px;padding: 5px;'>").append(
+                                    $("<h4 class='drag-widget'>").append(
+                                        $("<i class='icon fa fa-info'>"),
+                                        data.title
+                                    ),
+                                    //data.craft_name,
+                                    //$("<p>").text(data.description),
+                                    //$("<div style='display:none'>").text(data.id)
+                                ).appendTo(pre);
+
+                                var view = $("<div class='view'>");                                
+
+                                $("<div class='box' data-build='" + data.id + "'>").append(
+                                    $("<div class='box-header with-border '>").append(
+                                        $("<h3 class='box-title'>").text(data.title)                                        
+                                    ),
+                                    $("<div class='box-body'>").append(
+                                        data.craft_name,
+                                        $("<i data-config='" + data.id + "' class='fa fa fa-gears pull-right' style='cursor:pointer'>")
+                                    )
+                                ).appendTo(view);
+                                return mas.append(pre).append(view);
+                            }
+
+                            function getHtml() {
+                                downloadLayoutSrc();
+                                var t = $("#download-layout").children();
+                                t.find("[data-build]").each(function (i, el) {
+                                    var t = $(this).attr("data-build");
+                                    $(this).replaceWith("{{==pagePost:" + t +"==}}");
+                                });
+                                var str = $("#download-layout").html();
+                                return str;
+                            }
+
+                            function upateState() {
+                                downloadLayoutSrc();
+                                $("[data-id]").removeClass("selected");
+                                var t = $("#download-layout").children();
+                                t.find("[data-build]").each(function (i, el) {
+                                    var t = $(this).attr("data-build");
+                                    $("[data-id=" + t + "]").addClass("selected");
+                                });
+                                $("[data-config]").click(function () {
+                                    var crId = $(this).attr("data-config");
+                                    craftId = crId;
+                                    loadAction(crId);
+                                    actionSheet.option("target", this);
+                                    actionSheet.option("visible", true);
+                                   // DevExpress.ui.notify(crId);
+                                });
+                            }
+
+                            function test() {
+                                alert(getHtml());
+                            }
+
+                            function savePage() {
+                                var str = getHtml();
+                                var editStr = $("#demo").html();
+                                editStr = "<!--" + editStr + "-->";
+
+                                $.ajax({
+                                    url: getURL('api/core/page/' + pageId),
+                                    method: "PUT",
+                                    data: { container: str + editStr}
+                                }).done(function () {
+                                    DevExpress.ui.notify("Saved", "success", 1000);
+                                    saveCraftPostion(str);
+                                })
+                            }
+                            function saveCraftPostion(str) {
+                                var li = [];
+                                str.replace(/{{==pagePost:([0-9]+)==}}/g, function (m,p1,off,stri) {
+                                    li.push(p1);
+
+                                });
+                                if (li.length > 0) {
+                                    $.ajax({
+                                        url: getURL('api/core/craftpage/' + pageId),
+                                        method: "PUT",
+                                        data: { Crafts: li.join(',') }
+                                    }).done(function () {
+
+                                    })
+                                }
+                            }
+
+
+                        </script>
+                    </li>
+
+                </ul>
+                <!-- /.sidebar-menu -->
+            </section>
+            <!-- /.sidebar -->
+        </aside>
+
+        <div class="content-wrapper">
+
+            <!-- Main content -->
+            <section class="content container-fluid">
+                <!--------------------------
+                | Your Page Content Here |
+                -------------------------->
+                <div style="min-height: 754px;height:100%" class="demo ui-sortable" id="demo">
+
+                </div>
+                <div id="download-layout">
+                    <div class="container">
+
+                    </div>
+                </div>
+                <div id="action-sheet" ></div>
+                <script>
+                            var actionStore;
+                            var actionId = 0;
+                            var actionTitle;
+                            function loadAction(craftId) {
+                                return $.ajax({
+                                    url: getURL('api/core/craftaction?$select=*,title as text&$filter=craft_id eq ' + craftId),
+                                    method: "GET"
+                                }).done(function (data) {
+                                    actionStore = new DevExpress.data.ArrayStore({
+                                        key: "id",
+                                        data: data
+                                    });
+
+                                    actionSheet.option("dataSource", actionStore);
+
+                                });
+                                   
+                            }
+
+                            var actionSheet = $("#action-sheet").dxActionSheet({
+                                dataSource: actionStore,                                
+                                title: "Choose action",
+                                usePopover: true,
+                                onItemClick: function (value) {
+                                    //DevExpress.ui.notify("The \"" + value.itemData.name + "\" button is clicked.");
+                                    actionId = value.itemData.id;
+                                    //actionRoleDataSource.load();
+                                    actionTitle = value.itemData.title;
+                                    showInfo();
+                                }
+                            }).dxActionSheet("instance");
+
+                </script>
+                <div id="popup">
+                    <div class="popup"></div>
+                </div>
+                <script>
+                            var actionRoleStore;
+                            var roleId;
+                            var actionUserStore;
+                            var userId;
+                            
+                            var userStore;
+                            var roleStore;
+
+                            //load all user
+                            $.ajax({
+                                url: getURL('api/core/user'),
+                                method: "GET"
+                            }).done(function (data) {
+                                userStore = data;
+                                if (userId) {
+
+                                    userId.dxDataGrid("instance").beginUpdate();
+                                    userId.dxDataGrid("instance").columnOption('user_id', 'lookup.dataSource', userStore);
+                                    userId.dxDataGrid("instance").endUpdate();
+                                }
+                            });
+
+
+                            //load all role
+                            $.ajax({
+                                url: getURL('api/core/role'),
+                                method: "GET"
+                            }).done(function (data) {
+                                roleStore = data;
+                                if (roleId) {
+                                    if (roleId) {
+                                        roleId.dxDataGrid("instance").beginUpdate();
+                                        roleId.dxDataGrid("instance").columnOption('role_id', 'lookup.dataSource', roleStore);
+                                        roleId.dxDataGrid("instance").endUpdate();
+                                    }
+                                }
+                            });
+
+                            function getActionRole() {                                
+                                return $.ajax({
+                                    url: getURL('api/core/craftpageactionrole?$filter=craft_action_callback_id eq ' + actionId + ' and page_id eq ' + pageId),
+                                    method: "GET",
+                                    data: { pageId: pageId, actionId: actionId }
+                                }).done(function (data) {
+                                    actionRoleStore =data;
+                                                                   
+                                });
+
+                                
+                            }
+
+                            var actionRoleDataSource = new DevExpress.data.CustomStore({
+                                key:'id',
+                                load: function (loadOptions) {
+                                    return $.getJSON(getURL('api/core/craftpageactionrole?$filter=craft_action_callback_id eq ' + actionId + ' and page_id eq ' + pageId));
+                                },
+
+                                byKey: function (key) {
+                                    return $.getJSON(getURL('api/core/craftpageactionrole' + "/" + encodeURIComponent(key)));
+                                },
+
+                                insert: function (values) {
+                                    return $.post(getURL('api/core/craftpageactionrole'), values);
+                                },
+
+                                update: function (key, values) {
+                                    return $.ajax({
+                                        url: getURL('api/core/craftpageactionrole' + "/" + encodeURIComponent(key)),
+                                        method: "PUT",
+                                        data: values
+                                    });
+                                },
+
+                                remove: function (key) {
+                                    return $.ajax({
+                                        url: getURL('api/core/craftpageactionrole' + "/" + encodeURIComponent(key)),
+                                        method: "DELETE",
+                                    });
+                                }
+                            });
+
+                            var AUD = new NCStore({
+                                url: getURL('api/core/craftpageactionuser'),
+                                filter: ['craft_action_callback_id=' + actionId, 'page_id=' + pageId],
+                                key:"id"
+                            });
+                            var actionUserDataSource = new DevExpress.data.CustomStore({
+                                key: 'id',
+                                load: function (loadOptions) {
+                                    return $.getJSON(getURL('api/core/craftpageactionuser?$filter=craft_action_callback_id eq ' + actionId + ' and page_id eq ' + pageId));
+                                },
+
+                                byKey: function (key) {
+                                    return $.getJSON(getURL('api/core/craftpageactionuser' + "/" + encodeURIComponent(key)));
+                                },
+
+                                insert: function (values) {
+                                    return $.post(getURL('api/core/craftpageactionuser'), values);
+                                },
+
+                                update: function (key, values) {
+                                    return $.ajax({
+                                        url: getURL('api/core/craftpageactionuser' + "/" + encodeURIComponent(key)),
+                                        method: "PUT",
+                                        data: values
+                                    });
+                                },
+
+                                remove: function (key) {
+                                    return $.ajax({
+                                        url: getURL('api/core/craftpageactionuser' + "/" + encodeURIComponent(key)),
+                                        method: "DELETE",
+                                    });
+                                }
+                            });
+
+                            var syncTreeViewSelection = function (treeView, value) {
+                                if (!value) {
+                                    treeView.unselectAll();
+                                } else {
+                                    treeView.selectItem(value);
+                                }
+                            };
+
+                            var formId = $("<div>").dxForm({
+                                formData: [],                              
+                                colCount: 1,
+                                items: [{
+                                    itemType: "tabbed",
+                                    tabPanelOptions: {
+                                        deferRendering: false
+                                    },
+                                    tabs: [{
+                                        title: "Roles",
+                                        items: [{
+                                            dataField: "Roles",
+                                            label: {
+                                                visible: false
+                                            },
+                                            template: function (data, itemElement) {       
+                                                var div = document.createElement("div");
+                                                itemElement.append(div);
+                                                roleId = $(div).dxDataGrid({
+                                                    dataSource:  { store: actionRoleDataSource },
+                                                    
+                                                    onInitNewRow: function (e) {
+                                                        e.data.page_id = pageId;
+                                                        e.data.craft_action_callback_id = actionId;
+                                                        e.data.deny = true;
+                                                        e.data.allow = false;
+                                                    },
+                                                    columnAutoWidth: true,
+                                                    showBorders: true,
+                                                    showRowLines: true,
+                                                    wordWrapEnabled: true,
+                                                    searchPanel: {
+                                                        visible: true,
+
+                                                    },
+                                                    editing: {
+                                                        mode: "cell",
+                                                        allowUpdating: true,
+                                                        allowDeleting: true,
+                                                        allowAdding: true
+                                                    },
+                                                    headerFilter: {
+                                                        visible: true
+                                                    },
+                                                    columns: [
+                                                        {
+                                                            dataField: "role_id",
+                                                            caption: "Role",
+                                                            lookup: {
+                                                                dataSource: roleStore,
+                                                                valueExpr: "id",
+                                                                displayExpr: "role_name"
+                                                            },
+                                                            editCellTemplate: function (cellElement, cellInfo) {
+                                                                var div = document.createElement("div");
+                                                                cellElement.get(0).appendChild(div);
+                                                                $(div).dxDropDownBox({
+                                                                    value: cellInfo.value,
+                                                                    valueExpr: "id",
+                                                                    displayExpr: "role_name",
+                                                                    dataSource: roleStore,
+                                                                    contentTemplate: function (e) {
+                                                                        var value = e.component.option("value"),
+                                                                            $treeView = $("<div>").dxTreeView({
+                                                                                dataSource: e.component.option("dataSource"),
+                                                                                dataStructure: "plain",
+                                                                                keyExpr: "id",
+                                                                                parentIdExpr: "parent_id",
+                                                                                selectionMode: "single",
+                                                                                displayExpr: "role_name",
+                                                                                selectByClick: true,
+                                                                                onContentReady: function (args) {
+                                                                                    syncTreeViewSelection(args.component, value);
+                                                                                },
+                                                                                selectNodesRecursive: false,
+                                                                                onItemSelectionChanged: function (args) {
+                                                                                    var value = args.component.getSelectedNodesKeys();
+                                                                                    e.component.option("value", value);
+                                                                                    if (value.length > 0)
+                                                                                        cellInfo.setValue(value[0]);
+                                                                                }
+                                                                            });
+
+                                                                        treeView = $treeView.dxTreeView("instance");
+
+                                                                        e.component.on("valueChanged", function (args) {
+                                                                            syncTreeViewSelection(treeView, args.value);
+                                                                            if (args.value.length > 0)
+                                                                                cellInfo.setValue(args.value[0]);
+                                                                        });
+
+                                                                        return $treeView;
+                                                                    }
+                                                                });
+
+                                                                
+                                                            }
+                                                        },
+                                                        {
+                                                            dataField: "allow",
+                                                            dataType: "boolean",
+                                                            setCellValue: function (newData, value, currentRowData) {
+                                                                newData.allow = value;
+                                                                if (value && currentRowData.deny) {
+                                                                    newData.deny = false;
+                                                                }
+                                                            }
+                                                        },
+                                                        {
+                                                            dataField: "deny",
+                                                            dataType: "boolean",
+                                                            setCellValue: function (newData, value, currentRowData) {
+                                                                newData.deny = value;
+                                                                if (value && currentRowData.allow) {
+                                                                    newData.allow = false;
+                                                                }
+                                                            }
+                                                        }
+                                                    ],
+                                                })                                              
+                                            
+                                            }
+                                        }]
+                                    }, {
+                                        title: "Users",
+                                        items: [{
+                                            dataField: "Users",
+                                            label: {
+                                                visible: false
+                                            },
+                                            template: function (data, itemElement) {
+                                                var div = document.createElement("div");
+                                                itemElement.append(div);
+                                                userId = $(div).dxDataGrid({
+                                                    dataSource: AUD.Store(),
+                                                    onInitNewRow: function (e) {
+                                                        e.data.page_id = pageId;
+                                                        e.data.craft_action_callback_id = actionId;
+                                                        e.data.deny = true;
+                                                        e.data.allow = false;
+                                                    },
+                                                    columnAutoWidth: true,
+                                                    showBorders: true,
+                                                    showRowLines: true,
+                                                    wordWrapEnabled: true,
+                                                    searchPanel: {
+                                                        visible: true,
+
+                                                    },
+                                                    editing: {
+                                                        mode: "cell",
+                                                        allowUpdating: true,
+                                                        allowDeleting: true,
+                                                        allowAdding: true
+                                                    },
+                                                    headerFilter: {
+                                                        visible: true
+                                                    },
+                                                    columns: [
+                                                        {
+                                                            dataField: "user_id",
+                                                            caption: "User",
+                                                            lookup: {
+                                                                dataSource: userStore,
+                                                                valueExpr: "id",
+                                                                displayExpr: "username"
+                                                            }
+
+                                                        },
+                                                        {
+                                                            dataField: "allow",
+                                                            dataType: "boolean",
+                                                            setCellValue: function (newData, value, currentRowData) {
+                                                                newData.allow = value;
+                                                                if (value && currentRowData.deny) {
+                                                                    newData.deny = false;
+                                                                }
+                                                            }
+                                                        },
+                                                        {
+                                                            dataField: "deny",
+                                                            dataType: "boolean",
+                                                            setCellValue: function (newData, value, currentRowData) {
+                                                                newData.deny = value;
+                                                                if (value && currentRowData.allow) {
+                                                                    newData.allow = false;
+                                                                }
+                                                            }
+                                                        }
+                                                    ],
+                                                })
+                                            }
+                                        }]
+                                    }]
+                                }]
+
+                            });
+                            var popup = null;
+                            var popupOptions = {                                
+                                contentTemplate: function () {
+                                    return $("<div>").append(formId);
+                                },
+                                showTitle: true,
+                                title: "Craft Action",
+                                visible: false,
+                                dragEnabled: true,
+                                closeOnOutsideClick: true
+                            };
+                            var $popupContainer = $("<div />")
+                                .addClass("popup")
+                                .appendTo($("#popup"));
+                            var popup = $popupContainer.dxPopup(popupOptions).dxPopup("instance");
+                        
+                            var showInfo = function () {                                
+                                //if (popup) {
+                                //    $(".popup").remove();
+                                //}
+                                //var $popupContainer = $("<div />")
+                                //    .addClass("popup")
+                                //    .appendTo($("#popup"));
+                                //popup = $popupContainer.dxPopup(popupOptions).dxPopup("instance");
+                                if (roleId)
+                                    roleId.dxDataGrid("instance").refresh();
+                                if (userId)
+                                    userId.dxDataGrid("instance").refresh();
+                                popup.option("title", actionTitle)
+                                popup.show();
+                            };
+                </script>
+            </section>
+            <!-- /.content -->
+        </div>
+
+        <aside class="control-sidebar control-sidebar-dark">
+            <!-- Create the tabs -->
+            <ul class="nav nav-tabs nav-justified control-sidebar-tabs">
+                <li class="active"><a href="#control-sidebar-home-tab" data-toggle="tab"><i class="fa fa-home"></i></a></li>
+                <li><a href="#control-sidebar-settings-tab" data-toggle="tab"><i class="fa fa-gears"></i></a></li>
+            </ul>
+            <!-- Tab panes -->
+            <div class="tab-content">
+                <!-- Home tab content -->
+                <div class="tab-pane active" id="control-sidebar-home-tab">
+                    <h3 class="control-sidebar-heading">Recent Activity</h3>
+                    <ul class="control-sidebar-menu">
+                        <li>
+                            <a href="javascript:;">
+                                <i class="menu-icon fa fa-birthday-cake bg-red"></i>
+                                <div class="menu-info">
+                                    <h4 class="control-sidebar-subheading">Langdon's Birthday</h4>
+                                    <p>Will be 23 on April 24th</p>
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+                    <!-- /.control-sidebar-menu -->
+                    <h3 class="control-sidebar-heading">Tasks Progress</h3>
+                    <ul class="control-sidebar-menu">
+                        <li>
+                            <a href="javascript:;">
+                                <h4 class="control-sidebar-subheading">
+                                    Custom Template Design
+                                    <span class="pull-right-container">
+                                        <span class="label label-danger pull-right">70%</span>
+                                    </span>
+                                </h4>
+                                <div class="progress progress-xxs">
+                                    <div class="progress-bar progress-bar-danger" style="width: 70%"></div>
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+                    <!-- /.control-sidebar-menu -->
+                </div>
+                <!-- /.tab-pane -->
+                <!-- Stats tab content -->
+                <div class="tab-pane" id="control-sidebar-stats-tab">Stats Tab Content</div>
+                <!-- /.tab-pane -->
+                <!-- Settings tab content -->
+                <div class="tab-pane" id="control-sidebar-settings-tab">
+                    <form method="post">
+                        <h3 class="control-sidebar-heading">General Settings</h3>
+                        <div class="form-group">
+                            <label class="control-sidebar-subheading">
+                                Report panel usage
+                                <input type="checkbox" class="pull-right" checked>
+                            </label>
+                            <p>
+                                {{_RIGHT_}}
+                            </p>
+                        </div>
+                        <!-- /.form-group -->
+                    </form>
+                </div>
+                <!-- /.tab-pane -->
+            </div>
+        </aside>
+
+    </div>
+
+
+
+
+
+    <!--/.fluid-container-->
+    <script type="text/javascript">
+
+        function saveLayout() {
+            return;
+            $.ajax({
+                type: "POST",
+                url: "/build_v3/saveLayout",
+                data: { 'layout-v3': $('.demo').html() },
+                success: function (data) {
+                    //updateButtonsVisibility();
+                }
+            });
+        }
+
+        //下载代码
+        function downloadLayout() {
+            $.ajax({
+                type: "POST",
+                url: "/build_v3/downloadLayout",
+                data: { 'layout-v3': $('#download-layout').html() },
+                success: function (data) {
+                    window.location.href = '/build_v3/download';
+                }
+            });
+        }
+
+        function downloadHtmlLayout() {
+            $.ajax({
+                type: "POST",
+                url: "/build_v3/downloadLayout",
+                data: { 'layout-v3': $('#download-layout').html() },
+                success: function (data) {
+                    window.location.href = '/build_v3/downloadHtml';
+                }
+            });
+        }
+
+        function undoLayout() {
+
+            $.ajax({
+                type: "POST",
+                url: "/build_v3/getPreviousLayout",
+                data: {},
+                success: function (data) {
+                    undoOperation(data);
+                }
+            });
+        }
+
+        function redoLayout() {
+
+            $.ajax({
+                type: "POST",
+                url: "/build_v3/getPreviousLayout",
+                data: {},
+                success: function (data) {
+                    redoOperation(data);
+                }
+            });
+        }
+
+        $(document).on('hidden.bs.modal', function (e) {
+            $(e.target).removeData('bs.modal');
+        });
+
+        $('body').on('click', '#continue-share-non-logged', function () {
+            $('#share-not-logged').hide();
+            $('#share-logged').removeClass('hide');
+            $('#share-logged').show();
+        });
+
+        $('body').on('click', '#continue-download-non-logged', function () {
+            $('#download-not-logged').hide();
+            $('#download').removeClass('hide');
+            $('#download').show();
+            $('#downloadhtml').removeClass('hide');
+            $('#downloadhtml').show();
+            $('#download-logged').removeClass('hide');
+            $('#download-logged').show();
+        });
+
+
+    </script>
+
+</body>
+</html>

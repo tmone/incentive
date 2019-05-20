@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="utf-8"?>
+<module version="1.0" ref="NC">
+  <information>
+    <name>Account</name>
+    <version>1.0</version>
+    <creationDate>03/27/2018</creationDate>
+    <author>KEVN Team</author>
+    <authorUrl></authorUrl>
+    <copyright>KEVN</copyright>
+    <description>Account Management</description>
+  </information>
+  <models>
+    <model name="nc_core_user">
+      <columns>        
+        <column name="password" type="encrypt"></column>
+        <column name="avatar" type="image"></column>
+      </columns>
+      <childs>
+        <child table="nc_core_user_role" column="user_id"></child>
+        <child table="nc_core_user_orgchart" column="user_id"></child>
+        <child table="nc_sc_menu_user" column="user_id"></child>
+        <child table="nc_sc_page_craft_action_callback_user" column="user_id"></child>
+      </childs>
+    </model>
+    <model name="nc_core_orgchart">
+      <childs>
+        <child table="nc_core_user_orgchart" column="orgchart_id"></child>
+        <child table="nc_core_orgchart_mapping_data" column="orgchart_id"></child>
+      </childs>
+    </model>
+    <model name="nc_core_role">
+      <childs>
+        <child table="nc_core_user_role" column="role_id"></child>
+        <child table="nc_sc_menu_user" column="role_id"></child>
+        <child table="nc_sc_page_craft_action_callback_role" column="role_id"></child>
+      </childs>
+    </model>
+  </models>
+  <crafts>
+    <!--craft-->
+    <craft>
+      <craftinfo>
+        <!--  Infor for run Craft-->
+        <name>UserManager</name>
+        <model-ref>nc_core_user</model-ref>
+        <title>Manager User List</title>
+        <app>Account</app>
+        <description>Manage User List</description>
+        <controller>Account</controller>
+        <action>Users</action>
+        <view>/Modules/Core/Account/Views/User/Index.cshtml</view>
+      </craftinfo>
+      <acls>
+        <!-- Infor for callback other action -->
+        <acl>
+          <name>add</name>
+          <title>Add New</title>
+          <app>Account</app>
+          <controller>User</controller>
+          <action>Post</action>
+          <description>Add new user in user list Craft</description>
+        </acl>
+        <acl>
+          <name>edit</name>
+          <title>Edit</title>
+          <app>Account</app>
+          <controller>User</controller>
+          <action>Put</action>
+          <description>Edit user in user list Craft</description>
+        </acl>
+        <acl>
+          <name>delete</name>
+          <title>Delete</title>
+          <app>Account</app>
+          <controller>User</controller>
+          <action>Delete</action>
+          <description>Delete user in user list Craft</description>
+        </acl>
+        <acl>
+          <name>addOrgchart</name>
+          <title>Set Orgchart</title>
+          <app>Account</app>
+          <controller>UserOrgchart</controller>
+          <action>Post</action>
+          <description>Set user to orgchart</description>
+        </acl>
+        <acl>
+          <name>addRole</name>
+          <title>Set Role</title>
+          <app>Account</app>
+          <controller>UserRole</controller>
+          <action>Post</action>
+          <description>Set role for user list</description>
+        </acl>
+        <acl>
+          <name>deleteOrgchart</name>
+          <title>Remove Orgchart</title>
+          <app>Account</app>
+          <controller>UserOrgchartDelete</controller>
+          <action>Delete</action>
+          <description>Remove orgchart</description>
+        </acl>
+        <acl>
+          <name>deleteRole</name>
+          <title>Remove Role</title>
+          <app>Account</app>
+          <controller>UserRoleDelete</controller>
+          <action>Delete</action>
+          <description>Remove role</description>
+        </acl>
+      </acls>
+      <params>
+        <!-- Parameters -->
+        <!--External Link to Other Craft for contrains & refresh data-->
+        <param></param>
+      </params>
+    </craft>
+    <!--//craft-->
+    <!--craft-->
+    <craft>
+      <craftinfo>
+        <!--  Infor for run Craft-->
+        <name>OrgchartTree</name>
+        <model-ref>nc_core_orgchart</model-ref>
+        <title>Orgchart Tree List</title>
+        <app>Account</app>
+        <description>Design orgchart tree list</description>
+        <controller>Account</controller>
+        <action>Orgcharts</action>
+        <view>/Modules/Core/Account/Views/Orgchart/OrgChart.cshtml</view>
+      </craftinfo>
+      <acls>
+        <!-- Infor for callback other action -->
+        <acl>
+          <name>addRoot</name>
+          <title>Add Root</title>
+          <app>Account</app>
+          <controller>Orgchart</controller>
+          <action>Post</action>
+          <description>Add a root orgchart</description>
+        </acl>
+        <acl>
+          <name>add</name>
+          <title>Add Child</title>
+          <app>Account</app>
+          <controller>Orgchart</controller>
+          <action>Post</action>
+          <description>Add a chid orgchart</description>
+        </acl>
+        <acl>
+          <name>edit</name>
+          <title>Edit</title>
+          <app>Account</app>
+          <controller>Orgchart</controller>
+          <action>Put</action>
+          <description>Edit orgchart</description>
+        </acl>
+        <acl>
+          <name>delete</name>
+          <title>Delete</title>
+          <app>Account</app>
+          <controller>Orgchart</controller>
+          <action>Delete</action>
+          <description>Delete orgchart</description>
+        </acl>
+        <acl>
+          <name>addUser</name>
+          <title>Add user</title>
+          <app>Account</app>
+          <controller>UserOrgchart</controller>
+          <action>Post</action>
+          <description>Add user to orgchart</description>
+        </acl>
+        <acl>
+          <name>deleteUser</name>
+          <title>Delete user</title>
+          <app>Account</app>
+          <controller>UserOrgchart</controller>
+          <action>Delete</action>
+          <description>Delete user from orgchart</description>
+        </acl>
+      </acls>
+      <params>
+        <!-- Parameters -->
+        <!--External Link to Other Craft for contrains & refresh data-->
+        <param></param>
+      </params>
+    </craft>
+    <!--//craft-->
+    <!--craft-->
+    <craft>
+      <craftinfo>
+        <!--  Infor for run Craft-->
+        <name>Roles</name>
+        <model-ref>nc_core_role</model-ref>
+        <title>Role List</title>
+        <app>Account</app>
+        <description>Role list</description>
+        <controller>Account</controller>
+        <action>Roless</action>
+        <view>/Modules/Core/Account/Views/Role/Role.cshtml</view>
+      </craftinfo>
+      <acls>
+        <!-- Infor for callback other action -->
+        <acl>
+          <name>addRoot</name>
+          <title>Add Root</title>
+          <app>Account</app>
+          <controller>Role</controller>
+          <action>Post</action>
+          <description>Add a root role</description>
+        </acl>
+        <acl>
+          <name>add</name>
+          <title>Add Child</title>
+          <app>Account</app>
+          <controller>Role</controller>
+          <action>Post</action>
+          <description>Add a chid role</description>
+        </acl>
+        <acl>
+          <name>edit</name>
+          <title>Edit</title>
+          <app>Account</app>
+          <controller>Role</controller>
+          <action>Put</action>
+          <description>Edit role</description>
+        </acl>
+        <acl>
+          <name>delete</name>
+          <title>Delete</title>
+          <app>Account</app>
+          <controller>Role</controller>
+          <action>Delete</action>
+          <description>Delete role</description>
+        </acl>
+        <acl>
+          <name>addUser</name>
+          <title>Add user</title>
+          <app>Account</app>
+          <controller>UserRole</controller>
+          <action>Post</action>
+          <description>Add user to role</description>
+        </acl>
+        <acl>
+          <name>deleteUser</name>
+          <title>Delete user</title>
+          <app>Account</app>
+          <controller>UserRole</controller>
+          <action>Delete</action>
+          <description>Delete user from</description>
+        </acl>
+      </acls>
+      <params>
+        <!-- Parameters -->
+        <!--External Link to Other Craft for contrains & refresh data-->
+        <param></param>
+      </params>
+    </craft>
+    <!--//craft-->
+  </crafts>
+</module>

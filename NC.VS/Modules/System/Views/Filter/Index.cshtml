@@ -1,0 +1,30 @@
+﻿@inherits System.Web.Mvc.WebViewPage
+@{
+    Layout = "~/Layout/LAdmin.cshtml";
+}
+<script src="@Url.Content("~/Resource/scripts/core/FilterUser.js")"></script>
+<script src="@Url.Content("~/Resource/scripts/core/FilterRole.js")"></script>
+
+<script src="@Url.Content("~/Resource/scripts/core/Filter.js")"></script>
+<div class="row">
+    <dir class="col-md-12">
+        <div class="box box-warning">
+            <div class="box-body">
+                <div id="gridContainer">
+                    <script>
+                        var men = new Filter();
+                    </script>
+                </div>
+            </div>
+        </div>
+    </dir>
+    
+</div>
+@*<script>
+                        men.Component.on("selectionChanged", function (e) {
+                            rol.UpdateKey(e.selectedRowsData[0].table_name);
+                            usr.UpdateKey(e.selectedRowsData[0].table_name);
+
+                        });
+                        $("[href='#role']").click();
+</script>*@

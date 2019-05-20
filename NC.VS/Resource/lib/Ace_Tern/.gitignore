@@ -1,0 +1,6 @@
+/Tern.ace.xdk
+/Tern.ace.xdke
+/reference
+_site
+node_modules
+ace-builds/src-noconflict/ace.js

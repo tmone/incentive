@@ -1,0 +1,606 @@
+﻿@inherits System.Web.Mvc.WebViewPage
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title></title>
+    <!-- GrapesJs-->
+    @*<link rel="stylesheet" href="@Url.Content("~/Resource/lib/AdminLTE-2.4.2/bower_components/bootstrap/dist/css/bootstrap.min.css")">
+        <link rel="stylesheet" href="@Url.Content("~/Resource/lib/AdminLTE-2.4.2/bower_components/font-awesome/css/font-awesome.min.css")">
+        <link rel="stylesheet" href="@Url.Content("~/Resource/lib/AdminLTE-2.4.2/bower_components/Ionicons/css/ionicons.min.css")">
+        <link rel="stylesheet" href="@Url.Content("~/Resource/lib/AdminLTE-2.4.2/dist/css/AdminLTE.min.css")">
+        <link rel="stylesheet" href="@Url.Content("~/Resource/lib/AdminLTE-2.4.2/dist/css/skins/skin-organe.min.css")">*@
+    <link rel="stylesheet" href="@Url.Content("~/Resource/lib/grapesjs-dev/dist/css/grapes.min.css")">
+
+    <link rel="stylesheet" href="@Url.Content("~/Resource/lib/DevExtreme/css/dx.common.css")">
+    <link rel="dx-theme" data-theme="generic.light" href="@Url.Content("~/Resource/lib/DevExtreme/css/dx.light.css")" />
+    <script src="@Url.Content("~/Resource/scripts/jquery-3.1.0.min.js")"></script>
+    <script src="@Url.Content("~/Resource/lib/AdminLTE-2.4.2/bower_components/bootstrap/dist/js/bootstrap.min.js")"></script>
+    <script src="@Url.Content("~/Resource/lib/AdminLTE-2.4.2/dist/js/adminlte.min.js")"></script>
+
+    <script src="@Url.Content("~/Resource/lib/DevExtreme/js/dx.all.debug.js")"></script>
+    <script src="@Url.Content("~/Resource/scripts/core/NC.js")"></script>
+    <script src="@Url.Content("~/Resource/scripts/core/NCStore.js")"></script>
+    <script src="@Url.Content("~/Resource/scripts/core/NCData.js")"></script>
+
+    <script src="@Url.Content("~/Resource/lib/grapesjs-dev/dist/grapes.min.js")"></script>
+    <script src="@Url.Content("~/Resource/lib/grapesjs-dev/dist/grapesjs-adminlte.min.js")"></script>
+    <script src="@Url.Content("~/Resource/lib/grapesjs-dev/dist/grapesjs-plugin-nc.min.js")"></script>
+
+</head>
+<body>
+    <input type="hidden" id="token" value="@Session.SessionID.ToString()" />
+    <input type="hidden" id="base_url" value="http://localhost:8080/" />
+    <div id="gjs">
+        <div class="container"></div>
+        <style>
+            .gjs-dashed .container, .gjs-dashed .row, .gjs-dashed .column {
+                min-height: 1.5rem !important;
+                padding-top: 20px;
+                padding-bottom: 20px;
+            }
+
+            .NCWidget {
+                padding: 20px;
+                background-color: coral;
+                color: coral;
+            }
+
+                .NCWidget::before {
+                    content: attr(data-title);
+                    padding: 50px;
+                    color: white;
+                }
+        </style>
+    </div>
+    <div id="action-sheet"></div>
+
+    <div id="popup">
+        <div class="popup"></div>
+    </div>
+    <script type="text/javascript">
+        var pageId = '@Html.Raw(ViewBag.ID)';
+        var actionId=0;
+        var editor = grapesjs.init({
+            showOffsets: 1,
+            noticeOnUnload: 0,
+            storageManager: { autoload: 0 },
+            container: '#gjs',
+            fromElement: true,
+            showDevices: true,
+            //plugins: ['grapesjs-adminlte'],
+            //pluginsOpts: {
+            //    'grapesjs-adminlte': {
+            //        blocks: {},
+            //        blockCategories: {},
+            //        labels: {},
+            //        gridDevicesPanel: true
+            //    }
+            //},
+
+        });
+        window.editor = editor;
+        var bm = editor.BlockManager;
+        var domc = editor.DomComponents;
+        var defaultType = domc.getType('default');
+        var defaultModel = defaultType.model;
+        var defaultView = defaultType.view;
+
+        editor.TraitManager.addType('permit', {
+          events:{
+            'keyup': 'onChange',  // trigger parent onChange method on keyup
+          },
+
+          getInputEl: function() {
+              if (!this.inputEl) {
+                  var md = this.model;
+                  //var attrs = this.getAttributes();
+                  //var id = attrs['data-id'] || null;
+
+                  var opts = md.get('options') || [];
+                  var id = opts.id;
+                  var na = opts.name;
+                  var list = opts.data;
+
+                  var input = document.createElement('div');
+
+                for (var i = 0; i < list.length; i++) {
+                    var bt = document.createElement('button');
+                    bt.append(list[i].title);
+                    bt.setAttribute("data-id", list[i].id);
+                    bt.setAttribute("style", "width:100%");
+                    bt.setAttribute("onClick", "javascript:showInfo(" + list[i].id +");")
+                    input.append(bt);
+                }
+
+
+              this.inputEl = input;
+            }
+            return this.inputEl;
+          },
+
+          /**
+           * Triggered when the value of the model is changed
+           */
+          onValueChange: function () {
+              this.target.set('permit', this.model.get('value'));
+          }
+        });
+
+
+
+        var request = new XMLHttpRequest();
+        request.open('GET', getURL('/api/core/craftpage/' + pageId), true);
+        request.onload = function () {
+            if (request.status >= 200 && request.status < 400) {
+                // Success!
+                var dat = JSON.parse(request.responseText);
+                for (var i = 0; i < dat.length; i++) {
+                    bm.add(dat[i].craft_name).set({
+                        label: dat[i].title,
+                        category: 'NC Widgets',
+                        attributes: { class: 'fa fa-th' },
+                        content: "<div class='NCWidget NCWidget-" + dat[i].id+ "' data-id='" +dat[i].id+"' data-title='" +dat[i].title+"'>{{==pagePost:"+dat[i].id+"==}}</div>"
+                    });
+                    createCom(dat[i].id, dat[i].craft_name);
+
+                }
+            } else {
+                // We reached our target server, but it returned an error
+
+            }
+        };
+
+        request.onerror = function () {
+            // There was a connection error of some sort
+        };
+
+        request.send();
+
+        function createCom(id,name) {
+            var request = new XMLHttpRequest();
+            request.open('GET', getURL('api/core/craftaction?$filter=craft_id eq ' + id), true);
+            request.onload = function () {
+                var dat = [];
+                if (request.status >= 200 && request.status < 400) {
+                    // Success!
+                    dat = JSON.parse(request.responseText);
+                } else {
+                    // We reached our target server, but it returned an error
+
+                }
+                domc.addType('NCWidget-' + id, {
+                    model: defaultModel.extend({
+                        defaults: Object.assign({}, defaultModel.prototype.defaults, {
+                            'custom-name': name,
+                            tagName: 'div',
+                            classes: ['NCWidget-' + id],
+                            traits: [
+                                {
+                                    label: 'Permit',
+                                    type: 'permit',
+                                    name: 'Permit',
+                                    options: {id:id,name:name,data:dat}
+                                }
+                            ]
+                        })
+                    }, {
+                            isComponent(el) {
+                                let match = false;
+                                if (el && el.classList) {
+                                    el.classList.forEach(function (klass) {
+                                        if (klass == ('NCWidget-' + id)) {
+                                            match = true;
+                                        }
+                                    });
+                                }
+                                if (match) return { type: 'NCWidget-' + id };
+                            }
+                        }),
+                    view: defaultView
+                });
+            };
+
+            request.onerror = function () {
+                // There was a connection error of some sort
+            };
+
+            request.send();
+        }
+
+    </script>
+    <script>
+        var actionRoleStore;
+        var roleId;
+        var actionUserStore;
+        var userId;
+
+        var userStore;
+        var roleStore;
+
+        //load all user
+        $.ajax({
+            url: getURL('api/core/user'),
+            method: "GET"
+        }).done(function (data) {
+            userStore = data;
+            if (userId) {
+
+                userId.dxDataGrid("instance").beginUpdate();
+                userId.dxDataGrid("instance").columnOption('user_id', 'lookup.dataSource', userStore);
+                userId.dxDataGrid("instance").endUpdate();
+            }
+        });
+
+
+        //load all role
+        $.ajax({
+            url: getURL('api/core/role'),
+            method: "GET"
+        }).done(function (data) {
+            roleStore = data;
+            if (roleId) {
+                if (roleId) {
+                    roleId.dxDataGrid("instance").beginUpdate();
+                    roleId.dxDataGrid("instance").columnOption('role_id', 'lookup.dataSource', roleStore);
+                    roleId.dxDataGrid("instance").endUpdate();
+                }
+            }
+        });
+
+        function getActionRole() {
+            return $.ajax({
+                url: getURL('api/core/craftpageactionrole?$filter=craft_action_callback_id eq ' + actionId + ' and page_id eq ' + pageId),
+                method: "GET",
+                data: { pageId: pageId, actionId: actionId }
+            }).done(function (data) {
+                actionRoleStore = data;
+
+            });
+
+
+        }
+
+        var actionRoleDataSource = new DevExpress.data.CustomStore({
+            key: 'id',
+            load: function (loadOptions) {
+                return $.getJSON(getURL('api/core/craftpageactionrole?$filter=craft_action_callback_id eq ' + actionId + ' and page_id eq ' + pageId));
+            },
+
+            byKey: function (key) {
+                return $.getJSON(getURL('api/core/craftpageactionrole' + "/" + encodeURIComponent(key)));
+            },
+
+            insert: function (values) {
+                return $.post(getURL('api/core/craftpageactionrole'), values);
+            },
+
+            update: function (key, values) {
+                return $.ajax({
+                    url: getURL('api/core/craftpageactionrole' + "/" + encodeURIComponent(key)),
+                    method: "PUT",
+                    data: values
+                });
+            },
+
+            remove: function (key) {
+                return $.ajax({
+                    url: getURL('api/core/craftpageactionrole' + "/" + encodeURIComponent(key)),
+                    method: "DELETE",
+                });
+            }
+        });
+
+        var AUD = new NCStore({
+            url: 'api/core/craftpageactionuser',
+            filter: ['craft_action_callback_id=' + actionId, 'page_id=' + pageId],
+            key: "id"
+        });
+        var actionUserDataSource = new DevExpress.data.CustomStore({
+            key: 'id',
+            load: function (loadOptions) {
+                return $.getJSON(getURL('api/core/craftpageactionuser?$filter=craft_action_callback_id eq ' + actionId + ' and page_id eq ' + pageId));
+            },
+
+            byKey: function (key) {
+                return $.getJSON(getURL('api/core/craftpageactionuser' + "/" + encodeURIComponent(key)));
+            },
+
+            insert: function (values) {
+                return $.post(getURL('api/core/craftpageactionuser'), values);
+            },
+
+            update: function (key, values) {
+                return $.ajax({
+                    url: getURL('api/core/craftpageactionuser' + "/" + encodeURIComponent(key)),
+                    method: "PUT",
+                    data: values
+                });
+            },
+
+            remove: function (key) {
+                return $.ajax({
+                    url: getURL('api/core/craftpageactionuser' + "/" + encodeURIComponent(key)),
+                    method: "DELETE",
+                });
+            }
+        });
+
+        var syncTreeViewSelection = function (treeView, value) {
+            if (!value) {
+                treeView.unselectAll();
+            } else {
+                treeView.selectItem(value);
+            }
+        };
+
+        var formId = $("<div>").dxForm({
+            formData: [],
+            colCount: 1,
+            items: [{
+                itemType: "tabbed",
+                tabPanelOptions: {
+                    deferRendering: false
+                },
+                tabs: [{
+                    title: "Roles",
+                    items: [{
+                        dataField: "Roles",
+                        label: {
+                            visible: false
+                        },
+                        template: function (data, itemElement) {
+                            var div = document.createElement("div");
+                            itemElement.append(div);
+                            roleId = $(div).dxDataGrid({
+                                dataSource: { store: actionRoleDataSource },
+
+                                onInitNewRow: function (e) {
+                                    e.data.page_id = pageId;
+                                    e.data.craft_action_callback_id = actionId;
+                                    e.data.deny = true;
+                                    e.data.allow = false;
+                                },
+                                columnAutoWidth: true,
+                                showBorders: true,
+                                showRowLines: true,
+                                wordWrapEnabled: true,
+                                searchPanel: {
+                                    visible: true,
+
+                                },
+                                editing: {
+                                    mode: "cell",
+                                    allowUpdating: true,
+                                    allowDeleting: true,
+                                    allowAdding: true
+                                },
+                                headerFilter: {
+                                    visible: true
+                                },
+                                columns: [
+                                    {
+                                        dataField: "role_id",
+                                        caption: "Role",
+                                        lookup: {
+                                            dataSource: roleStore,
+                                            valueExpr: "id",
+                                            displayExpr: "role_name"
+                                        },
+                                        editCellTemplate: function (cellElement, cellInfo) {
+                                            var div = document.createElement("div");
+                                            cellElement.get(0).appendChild(div);
+                                            $(div).dxDropDownBox({
+                                                value: cellInfo.value,
+                                                valueExpr: "id",
+                                                displayExpr: "role_name",
+                                                dataSource: roleStore,
+                                                contentTemplate: function (e) {
+                                                    var value = e.component.option("value"),
+                                                        $treeView = $("<div>").dxTreeView({
+                                                            dataSource: e.component.option("dataSource"),
+                                                            dataStructure: "plain",
+                                                            keyExpr: "id",
+                                                            parentIdExpr: "parent_id",
+                                                            selectionMode: "single",
+                                                            displayExpr: "role_name",
+                                                            selectByClick: true,
+                                                            onContentReady: function (args) {
+                                                                syncTreeViewSelection(args.component, value);
+                                                            },
+                                                            selectNodesRecursive: false,
+                                                            onItemSelectionChanged: function (args) {
+                                                                var value = args.component.getSelectedNodesKeys();
+                                                                e.component.option("value", value);
+                                                                if (value.length > 0)
+                                                                    cellInfo.setValue(value[0]);
+                                                            }
+                                                        });
+
+                                                    treeView = $treeView.dxTreeView("instance");
+
+                                                    e.component.on("valueChanged", function (args) {
+                                                        syncTreeViewSelection(treeView, args.value);
+                                                        if (args.value.length > 0)
+                                                            cellInfo.setValue(args.value[0]);
+                                                    });
+
+                                                    return $treeView;
+                                                }
+                                            });
+
+
+                                        }
+                                    },
+                                    {
+                                        dataField: "allow",
+                                        dataType: "boolean",
+                                        setCellValue: function (newData, value, currentRowData) {
+                                            newData.allow = value;
+                                            if (value && currentRowData.deny) {
+                                                newData.deny = false;
+                                            }
+                                        }
+                                    },
+                                    {
+                                        dataField: "deny",
+                                        dataType: "boolean",
+                                        setCellValue: function (newData, value, currentRowData) {
+                                            newData.deny = value;
+                                            if (value && currentRowData.allow) {
+                                                newData.allow = false;
+                                            }
+                                        }
+                                    }
+                                ],
+                            })
+
+                        }
+                    }]
+                }, {
+                    title: "Users",
+                    items: [{
+                        dataField: "Users",
+                        label: {
+                            visible: false
+                        },
+                        template: function (data, itemElement) {
+                            var div = document.createElement("div");
+                            itemElement.append(div);
+                            userId = $(div).dxDataGrid({
+                                dataSource: AUD.Store(),
+                                onInitNewRow: function (e) {
+                                    e.data.page_id = pageId;
+                                    e.data.craft_action_callback_id = actionId;
+                                    e.data.deny = true;
+                                    e.data.allow = false;
+                                },
+                                columnAutoWidth: true,
+                                showBorders: true,
+                                showRowLines: true,
+                                wordWrapEnabled: true,
+                                searchPanel: {
+                                    visible: true,
+
+                                },
+                                editing: {
+                                    mode: "cell",
+                                    allowUpdating: true,
+                                    allowDeleting: true,
+                                    allowAdding: true
+                                },
+                                headerFilter: {
+                                    visible: true
+                                },
+                                columns: [
+                                    {
+                                        dataField: "user_id",
+                                        caption: "User",
+                                        lookup: {
+                                            dataSource: userStore,
+                                            valueExpr: "id",
+                                            displayExpr: "username"
+                                        }
+
+                                    },
+                                    {
+                                        dataField: "allow",
+                                        dataType: "boolean",
+                                        setCellValue: function (newData, value, currentRowData) {
+                                            newData.allow = value;
+                                            if (value && currentRowData.deny) {
+                                                newData.deny = false;
+                                            }
+                                        }
+                                    },
+                                    {
+                                        dataField: "deny",
+                                        dataType: "boolean",
+                                        setCellValue: function (newData, value, currentRowData) {
+                                            newData.deny = value;
+                                            if (value && currentRowData.allow) {
+                                                newData.allow = false;
+                                            }
+                                        }
+                                    }
+                                ],
+                            })
+                        }
+                    }]
+                }]
+            }]
+
+        });
+        var scriptId = $("#editor");
+        var popup = null;
+        var scriptup = null;
+        var popupOptions = {
+            contentTemplate: function () {
+                return $("<div>").append(formId);
+            },
+            showTitle: true,
+            title: "Craft Action",
+            visible: false,
+            dragEnabled: true,
+            closeOnOutsideClick: true
+        };
+        var scriptupOptions = {
+            contentTemplate: function () {
+                return $("<div>").append(scriptId);
+            },
+            showTitle: true,
+            title: "Edit script",
+            visible: false,
+            dragEnabled: true,
+            closeOnOutsideClick: false,
+            toolbarItems: [{
+                toolbar: "bottom",
+                widget: "dxButton",
+                options: {
+                    icon: 'save',
+                    text: "Ok",
+                    onClick: function () {
+                        $(".edittingScript > .script").html(editor.getValue());
+                        scriptup.hide();
+                    }
+                },
+
+            }],
+        };
+        var $popupContainer = $("<div />")
+            .addClass("popup")
+            .appendTo($("#popup"));
+        var $popScriptContainer = $("<div>").addClass("popScript").appendTo($("#popup"));
+        var popup = $popupContainer.dxPopup(popupOptions).dxPopup("instance");
+        var scriptup = $popScriptContainer.dxPopup(scriptupOptions).dxPopup("instance");
+        var showInfo = function (id) {
+            actionId = id;
+            //if (popup) {
+            //    $(".popup").remove();
+            //}
+            //var $popupContainer = $("<div />")
+            //    .addClass("popup")
+            //    .appendTo($("#popup"));
+            //popup = $popupContainer.dxPopup(popupOptions).dxPopup("instance");
+            if (roleId)
+                roleId.dxDataGrid("instance").refresh();
+            if (userId)
+                userId.dxDataGrid("instance").refresh();
+            popup.option("title", "Permit")
+            popup.show();
+        };
+        var showScript = function (e) {
+            $("#editor").show();
+            editor.setValue($(".edittingScript > .script").html());
+            scriptup.show();
+        }
+
+        function saveLayout() {
+            return;
+        }
+
+    </script>
+
+</body>
+</html>
